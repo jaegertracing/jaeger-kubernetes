@@ -1,0 +1,35 @@
+sudo: false
+
+language: java
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+    - "$HOME/google-cloud-sdk/"
+
+before_install:
+  # install gcloud and kubectl
+  - rm -rf ${HOME}/google-cloud-sdk
+  - if [ ! -d ${HOME}/google-cloud-sdk ]; then curl https://sdk.cloud.google.com | bash; fi
+  - gcloud components install kubectl
+  # Auth, connect to gcloud and generate settings for kubectl
+  # https://cloud.google.com/solutions/continuous-delivery-with-travis-ci
+  # travis encrypt-file -r org/repo client-secret.json
+  - openssl aes-256-cbc -K $encrypted_99876af74eb6_key -iv $encrypted_99876af74eb6_iv -in client-secret.json.enc -out client-secret.json -d
+  - gcloud auth activate-service-account --key-file client-secret.json
+  - gcloud config set compute/zone us-east4-a
+  - gcloud config set project ${GCLOUD_PROJECT_NAME}
+  - gcloud container clusters get-credentials ${KUBERNETES_CLUSTER_NAME}
+  - kubectl get pods # for debug
+
+script:
+  - KUBERNETES_NAMESPACE=travis-ci mvn clean test
+
+
+env:
+  global:
+    - GCLOUD_PROJECT_NAME=jaeger-168214
+    - KUBERNETES_CLUSTER_NAME=jaeger
+    - PATH=$PATH:${HOME}/google-cloud-sdk/bin
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
