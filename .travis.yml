@@ -1,0 +1,13 @@
+trusty: required
+sudo: true
+
+language: java
+jdk:
+  - oraclejdk8
+
+script:
+  # compile java sources/tests, note that this does not run any tests
+  - mvn compile
+
+env:
+  global:
