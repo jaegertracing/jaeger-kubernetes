@@ -8,7 +8,7 @@ Template with in-memory storage with a limited functionality for local testing a
 
 To directly install everything you need:
 ```bash
-kubectl create -f TODO link to Github
+kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/<version>/all-in-one/jaeger-all-in-one-template.yml
 kubectl delete pod,service,deployment -l jaeger-infra # to remove everything
 ```
 
