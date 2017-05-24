@@ -7,7 +7,7 @@ jdk:
 
 script:
   # compile java sources/tests, note that this does not run any tests
-  - mvn compile
+  - ./mvnw clean compile
 
 env:
   global:

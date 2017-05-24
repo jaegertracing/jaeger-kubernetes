@@ -36,6 +36,7 @@
     <!-- plugins -->
     <version.maven-license-plugin>3.0</version.maven-license-plugin>
     <version.maven-surefire-plugin>2.20</version.maven-surefire-plugin>
+    <version.maven-plugin>0.3.4</version.maven-plugin>
   </properties>
 
   <inceptionYear>2017</inceptionYear>
@@ -57,6 +58,16 @@
   </dependencyManagement>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <!-- mvn -N io.takari:maven:wrapper -Dmaven=3.5.0 -->
+        <plugin>
+          <groupId>io.takari</groupId>
+          <artifactId>maven</artifactId>
+          <version>${version.maven-plugin}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>com.mycila</groupId>
@@ -70,7 +81,6 @@
             <exclude>.mvn/**</exclude>
             <exclude>mvnw*</exclude>
             <exclude>header.txt</exclude>
-            <exclude>**/.idea/**</exclude>
             <exclude>LICENSE</exclude>
             <exclude>**/*.md</exclude>
           </excludes>
