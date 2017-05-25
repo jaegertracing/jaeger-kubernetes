@@ -18,7 +18,6 @@ import java.net.URL;
 
 import org.arquillian.cube.kubernetes.annotations.Named;
 import org.arquillian.cube.kubernetes.annotations.PortForward;
-import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.Assert;
@@ -33,7 +32,6 @@ import okhttp3.Response;
 /**
  * @author Pavol Loffay
  */
-@RequiresKubernetes
 @RunWith(ArquillianConditionalRunner.class)
 public class AllInOneETest {
     private static final String SERVICE_NAME = "jaeger-all-in-one";
