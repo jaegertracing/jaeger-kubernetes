@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2017 The Jaeger Authors
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+    in compliance with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software distributed under the License
+    is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+    or implied. See the License for the specific language governing permissions and limitations under
+    the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.jaegertracing.kubernetes</groupId>
+  <artifactId>jaegertracing-kubernetes-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <rootProject.basedir>${project.basedir}</rootProject.basedir>
+
+    <version.com.squareup.okhttp3-okhttp>3.8.0</version.com.squareup.okhttp3-okhttp>
+    <version.junit>4.12</version.junit>
+    <version.org.awaitility-awaitility>3.0.0</version.org.awaitility-awaitility>
+    <version.org.arquillian.cube>1.4.0</version.org.arquillian.cube>
+    <version.org.jboss.arquillian>1.1.13.Final</version.org.jboss.arquillian>
+
+    <!-- plugins -->
+    <version.maven-license-plugin>3.0</version.maven-license-plugin>
+    <version.maven-surefire-plugin>2.20</version.maven-surefire-plugin>
+    <version.maven-failsafe-plugin>2.20</version.maven-failsafe-plugin>
+    <version.maven-plugin>0.3.4</version.maven-plugin>
+  </properties>
+
+  <inceptionYear>2017</inceptionYear>
+
+  <modules>
+    <module>all-in-one</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.arquillian.cube</groupId>
+        <artifactId>arquillian-cube-bom</artifactId>
+        <version>${version.org.arquillian.cube}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- mvn -N io.takari:maven:wrapper -Dmaven=3.5.0 -->
+        <plugin>
+          <groupId>io.takari</groupId>
+          <artifactId>maven</artifactId>
+          <version>${version.maven-plugin}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>${version.maven-license-plugin}</version>
+        <configuration>
+          <header>${rootProject.basedir}/header.txt</header>
+          <excludes>
+            <exclude>.travis.yml</exclude>
+            <exclude>.gitignore</exclude>
+            <exclude>.mvn/**</exclude>
+            <exclude>mvnw*</exclude>
+            <exclude>header.txt</exclude>
+            <exclude>LICENSE</exclude>
+            <exclude>**/*.md</exclude>
+          </excludes>
+          <strictCheck>true</strictCheck>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>com.mycila</groupId>
+            <artifactId>license-maven-plugin-git</artifactId>
+            <version>${version.maven-license-plugin}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <phase>compile</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${version.maven-surefire-plugin}</version>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

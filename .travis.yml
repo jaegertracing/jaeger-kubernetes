@@ -1,0 +1,16 @@
+dist: trusty
+sudo: required
+
+language: java
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+  - $HOME/.m2/repository
+
+script:
+  - ./mvnw clean test
+
+env:
+  global:
