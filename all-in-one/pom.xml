@@ -18,16 +18,16 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.jaegertracing.kubernetes</groupId>
-    <artifactId>jaegertracing-kubetnetes-parent</artifactId>
+    <artifactId>jaegertracing-kubernetes-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
+
+  <artifactId>jaegertracing-kubernetes-all-in-one</artifactId>
 
   <properties>
     <template.name>jaeger-all-in-one-template.yml</template.name>
     <rootProject.basedir>${project.basedir}/..</rootProject.basedir>
   </properties>
-
-  <artifactId>jaegertracing-kubetnetes-all-in-one</artifactId>
 
   <dependencies>
     <dependency>
