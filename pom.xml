@@ -16,7 +16,7 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.jaegertracing.k8s.test</groupId>
+  <groupId>io.jaegertracing.kubernetes</groupId>
   <artifactId>jaegertracing-kubetnetes-parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -36,6 +36,7 @@
     <!-- plugins -->
     <version.maven-license-plugin>3.0</version.maven-license-plugin>
     <version.maven-surefire-plugin>2.20</version.maven-surefire-plugin>
+    <version.maven-failsafe-plugin>2.20</version.maven-failsafe-plugin>
     <version.maven-plugin>0.3.4</version.maven-plugin>
   </properties>
 
@@ -101,6 +102,13 @@
             <phase>compile</phase>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${version.maven-surefire-plugin}</version>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
       </plugin>
     </plugins>
   </build>

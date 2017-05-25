@@ -35,7 +35,7 @@ import okhttp3.Response;
  */
 @RequiresKubernetes
 @RunWith(ArquillianConditionalRunner.class)
-public class AllInOneTest {
+public class AllInOneETest {
     private static final String SERVICE_NAME = "jaeger-all-in-one";
 
     private OkHttpClient okHttpClient = new OkHttpClient.Builder()

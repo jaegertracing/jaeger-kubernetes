@@ -10,8 +10,7 @@ cache:
   - $HOME/.m2/repository
 
 script:
-  # compile java sources/tests, note that this does not run any tests
-  - ./mvnw clean compile
+  - ./mvnw clean test
 
 env:
   global:

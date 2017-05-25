@@ -18,5 +18,5 @@ kubernetes cluster (via `kubectl`). Currently all templates are tested on miniku
 
 ```bash
 minikube start
-mvn clean test
+mvn clean verify -Pe2e
 ```
