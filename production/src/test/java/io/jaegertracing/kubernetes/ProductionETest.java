@@ -19,5 +19,6 @@ import org.junit.Ignore;
 /**
  * @author Pavol Loffay
  */
-public class AllInOneETest extends BaseETest {
+@Ignore
+public class ProductionETest extends BaseETest {
 }

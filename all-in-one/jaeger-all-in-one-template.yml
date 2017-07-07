@@ -73,6 +73,26 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
+    name: jaeger-collector
+    labels:
+      app: jaeger
+      jaeger-infra: collector-service
+  spec:
+    ports:
+    - name: jaeger-collector-tchannel
+      port: 14267
+      protocol: TCP
+      targetPort: 14267
+    - name: jaeger-collector-http
+      port: 14268
+      protocol: TCP
+      targetPort: 14268
+    selector:
+      jaeger-infra: jaeger-pod
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
     name: jaeger-agent
     labels:
       app: jaeger

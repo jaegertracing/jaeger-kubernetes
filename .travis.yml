@@ -5,12 +5,28 @@ language: java
 jdk:
   - oraclejdk8
 
+before_install:
+# install nsenter which is required for port forwarding
+  - travis/ubuntu-compile-nsenter.sh && sudo cp .tmp/util-linux-2.24.1/nsenter /usr/bin
+  - travis/install-start-minikube.sh && export PATH=`pwd`:${PATH} # set minikube and kubectl to PATH
+  - echo $PATH
+  - echo $KUBECONFIG
+  - ls -al
+  - cat $HOME/.kube/config
+  - minikube status
+  - kubectl get all --all-namespaces
+  - cat /etc/resolv.conf
+  - kubectl create -f all-in-one/jaeger-all-in-one-template.yml
+  - sleep 10
+  - kubectl get pods
+#  - minikube dashboard --url
+
 cache:
   directories:
   - $HOME/.m2/repository
 
 script:
-  - ./mvnw clean test
+  - ./mvnw clean verify -Pe2e
 
 env:
   global:

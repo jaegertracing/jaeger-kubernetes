@@ -22,10 +22,10 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>jaegertracing-kubernetes-all-in-one</artifactId>
+  <artifactId>jaegertracing-kubernetes-production</artifactId>
 
   <properties>
-    <template.name>jaeger-all-in-one-template.yml</template.name>
+    <template.name>jaeger-production-template.yml</template.name>
     <rootProject.basedir>${project.basedir}/..</rootProject.basedir>
   </properties>
 

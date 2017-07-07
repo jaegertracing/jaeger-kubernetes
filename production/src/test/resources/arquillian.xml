@@ -20,7 +20,10 @@
     http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
   <extension qualifier="kubernetes">
-    <property name="env.config.resource.name">jaeger-all-in-one-template.yml</property>
+    <property name="env.config.resource.name">jaeger-production-template.yml</property>
+    <property name="wait.timeout">600000</property>
+    <!--<property name="namespace.destroy.enabled">false</property>-->
+    <!--<property name="namespace.cleanup.enabled">false</property>-->
   </extension>
 
 </arquillian>
