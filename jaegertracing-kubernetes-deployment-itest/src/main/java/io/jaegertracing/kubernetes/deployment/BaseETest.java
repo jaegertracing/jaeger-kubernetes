@@ -13,6 +13,7 @@
  */
 package io.jaegertracing.kubernetes.deployment;
 
+import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -26,6 +27,7 @@ import com.uber.jaeger.senders.HttpSender;
 import io.opentracing.Span;
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -75,17 +77,19 @@ public class BaseETest {
   @Test
   public void testReportSpanToCollector() throws IOException, InterruptedException {
     Tracer tracer = createTracer("service1");
-    Span span = tracer.buildSpan("foo").startManual();
-    span.finish();
-
+    tracer.buildSpan("foo").startManual().finish();
     tracer.close();
-
-    Thread.sleep(5000);
 
     Request request = new Request.Builder()
         .url(queryUrl + "api/traces?service=service1")
         .get()
         .build();
+
+    await().atMost(5, TimeUnit.SECONDS).until(() -> {
+      Response response = okHttpClient.newCall(request).execute();
+      String body = response.body().string();
+      return body.contains("foo");
+    });
 
     try (Response response = okHttpClient.newCall(request).execute()) {
       assertEquals(200, response.code());
@@ -105,17 +109,20 @@ public class BaseETest {
     span1.finish();
     tracer1.close();
 
-    Thread.sleep(5000);
-
     Request request = new Request.Builder()
         .url(queryUrl + "api/dependencies?endTs=" + System.currentTimeMillis())
         .get()
         .build();
 
+    await().atMost(5, TimeUnit.SECONDS).until(() -> {
+      Response response = okHttpClient.newCall(request).execute();
+      String body = response.body().string();
+      return body.contains("service11") && body.contains("service22");
+    });
+
     try (Response response = okHttpClient.newCall(request).execute()) {
       assertEquals(200, response.code());
       String body = response.body().string();
-      System.out.println(body);
       assertTrue(body.contains("service11"));
       assertTrue(body.contains("service22"));
     }

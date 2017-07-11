@@ -34,7 +34,7 @@
     <dependency>
       <groupId>com.uber.jaeger</groupId>
       <artifactId>jaeger-core</artifactId>
-      <version>0.20.5</version>
+      <version>${version.com.uber.jaeger-jaeger-core}</version>
     </dependency>
 
     <dependency>
@@ -60,6 +60,11 @@
       <groupId>com.squareup.okhttp3</groupId>
       <artifactId>okhttp</artifactId>
       <version>${version.com.squareup.okhttp3-okhttp}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <version>${version.org.awaitility-awaitility}</version>
     </dependency>
   </dependencies>
 </project>
