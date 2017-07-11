@@ -52,7 +52,7 @@ kubernetes cluster (via `kubectl`).
 
 ```bash
 minikube start
-mvn clean verify -Pe2e
+./mvnw clean verify -Pe2e
 ```
 
    [ci-img]: https://travis-ci.org/jaegertracing/jaeger-kubernetes.svg?branch=master
