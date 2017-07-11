@@ -1,3 +1,5 @@
+[![Build Status][ci-img]][ci]
+
 # Jaeger Kubernetes Templates
 
 ## Development setup
@@ -52,3 +54,6 @@ kubernetes cluster (via `kubectl`).
 minikube start
 mvn clean verify -Pe2e
 ```
+
+   [ci-img]: https://travis-ci.org/jaegertracing/jaeger-kubernetes.svg?branch=master
+   [ci]: https://travis-ci.org/jaegertracing/jaeger-kubernetes
