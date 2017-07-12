@@ -19,6 +19,6 @@ import org.junit.Ignore;
 /**
  * @author Pavol Loffay
  */
-@Ignore
+@Ignore("temporally disabled, k8s client does handle StatefulSet used in the production template")
 public class ProductionETest extends BaseETest {
 }
