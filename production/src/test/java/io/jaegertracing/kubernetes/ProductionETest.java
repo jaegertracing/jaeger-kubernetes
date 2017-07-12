@@ -14,9 +14,11 @@
 package io.jaegertracing.kubernetes;
 
 import io.jaegertracing.kubernetes.deployment.BaseETest;
+import org.junit.Ignore;
 
 /**
  * @author Pavol Loffay
  */
-public class AllInOneETest extends BaseETest {
+@Ignore("temporally disabled, k8s client does handle StatefulSet used in the production template")
+public class ProductionETest extends BaseETest {
 }
