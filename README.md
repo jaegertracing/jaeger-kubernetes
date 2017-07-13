@@ -11,8 +11,8 @@ Install everything in the current namespace:
 kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/all-in-one/jaeger-all-in-one-template.yml
 ```
 
-Once everything is ready, `kubectl get service jaeger-all-in-one` tells you where to find Jaeger URL.
-If you are using `minikube` to setup your Kubernetes cluster, the command `minikube service jaeger-all-in-one --url`
+Once everything is ready, `kubectl get service jaeger-query` tells you where to find Jaeger URL.
+If you are using `minikube` to setup your Kubernetes cluster, the command `minikube service jaeger-query --url`
 can be used instead.
 
 ## Production setup
@@ -29,8 +29,6 @@ because these components attempt to connect to Cassandra right away and hard fai
 Your Agent hostname is `jaeger-agent.${NAMESPACE}.svc.cluster.local`
 
 Once everything is ready, `kubectl get service jaeger-query` tells you where to find Jaeger URL.
-If you are using `minikube` to setup your Kubernetes cluster, the command `minikube service jaeger-query --url`
-can be used instead.
 
 ### Persistent storage
 Even though this template uses a stateful Cassandra, backing storage is set to `emptyDir`. It's more

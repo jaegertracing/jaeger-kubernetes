@@ -12,11 +12,6 @@
 # the License.
 #
 
-# This template uses Jaeger with in-memory storage with limited functionality
-# Do not use this in production environment!
-#
-# kubectl create -f jaeger-all-in-one-template.yml
-# kubectl delete pod,service,deployment -l jaeger-infra
 apiVersion: v1
 kind: List
 items:
