@@ -14,11 +14,15 @@
 package io.jaegertracing.kubernetes;
 
 import io.jaegertracing.kubernetes.deployment.BaseETest;
+import java.io.IOException;
 import org.junit.Ignore;
 
 /**
  * @author Pavol Loffay
  */
-@Ignore("temporally disabled, k8s client does handle StatefulSet used in the production template")
 public class ProductionETest extends BaseETest {
+
+  @Ignore("dependency links returns 404 because of old Cassandra image")
+  public void testDependencyLinks() throws IOException, InterruptedException {
+  }
 }
