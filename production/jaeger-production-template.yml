@@ -161,7 +161,6 @@ items:
       port: 14267
       protocol: TCP
       targetPort: 14267
-    ports:
     - name: jaeger-collector-http
       port: 14268
       protocol: TCP
@@ -201,7 +200,6 @@ items:
             httpGet:
               path: "/"
               port: 16686
-            initialDelaySeconds: 5
         dnsPolicy: ClusterFirst
         restartPolicy: Always
 - apiVersion: v1
