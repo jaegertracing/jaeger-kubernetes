@@ -13,10 +13,6 @@
  */
 package io.jaegertracing.kubernetes.deployment;
 
-import static org.awaitility.Awaitility.await;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import com.uber.jaeger.Tracer;
 import com.uber.jaeger.metrics.Metrics;
 import com.uber.jaeger.metrics.NullStatsReporter;
@@ -25,9 +21,6 @@ import com.uber.jaeger.reporters.RemoteReporter;
 import com.uber.jaeger.samplers.ConstSampler;
 import com.uber.jaeger.senders.HttpSender;
 import io.opentracing.Span;
-import java.io.IOException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -38,6 +31,14 @@ import org.arquillian.cube.requirement.ArquillianConditionalRunner;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.await;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Pavol Loffay
@@ -126,6 +127,16 @@ public class BaseETest {
       assertTrue(body.contains("service11"));
       assertTrue(body.contains("service22"));
     }
+  }
+
+  @Test
+  public void hitDependencyScreen() throws IOException {
+    Request request = new Request.Builder()
+            .url(queryUrl + "api/dependencies?endTs=0")
+            .get()
+            .build();
+    Response response = okHttpClient.newCall(request).execute();
+    assertEquals(200, response.code());
   }
 
   protected com.uber.jaeger.Tracer createTracer(String serviceName) {
