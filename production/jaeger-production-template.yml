@@ -54,6 +54,10 @@ items:
               value: 100M
             - name: CASSANDRA_HOME
               value: "/opt/apache-cassandra-3.0.12"
+            - name: CASSANDRA_DC
+              value: "dc1"
+            - name: CASSANDRA_RACK
+              value: "rack1"
             - name: CASSANDRA_CLUSTER_NAME
               value: "jaeger"
             - name: CASSANDRA_SEED_POD
@@ -116,6 +120,11 @@ items:
         containers:
         - name: jaeger-cassandra-schema
           image: jaegertracing/jaeger-cassandra-schema
+          env:
+            - name: MODE
+              value: "prod"
+            - name: DATACENTER
+              value: "dc1"
         restartPolicy: Never
 - apiVersion: extensions/v1beta1
   kind: Deployment
