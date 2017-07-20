@@ -46,8 +46,7 @@ kubectl delete all,daemonset -l jaeger-infra
 
 ## Testing
 Tests are based on [Arquillian Cube](http://arquillian.org/arquillian-cube/) which require an active connection to
-kubernetes cluster (via `kubectl`). If you are executing tests from IDE make sure that template is copied to 
-target/test-classes.
+kubernetes cluster (via `kubectl`).
 
 ```bash
 minikube start
