@@ -38,22 +38,25 @@
     </dependency>
   </dependencies>
 
+  <build>
+    <!-- Copy template to test resources -->
+    <resources>
+      <resource>
+        <directory>${project.basedir}</directory>
+        <includes>
+          <include>${template.name}</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/test/resources</directory>
+      </resource>
+    </resources>
+  </build>
+
   <profiles>
     <profile>
       <id>e2e</id>
       <build>
-        <!-- Copy template to test resources -->
-        <resources>
-          <resource>
-            <directory>${project.basedir}</directory>
-            <includes>
-              <include>${template.name}</include>
-            </includes>
-          </resource>
-          <resource>
-            <directory>src/test/resources</directory>
-          </resource>
-        </resources>
         <plugins>
           <plugin>
             <artifactId>maven-failsafe-plugin</artifactId>
