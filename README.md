@@ -34,8 +34,6 @@ Once everything is ready, `kubectl get service jaeger-query` tells you where to 
 Even though this template uses a stateful Cassandra, backing storage is set to `emptyDir`. It's more
 appropriate to create a `PersistentVolumeClaim`/`PersistentVolume` and use it instead.
 
-Additionally, the Cassandra image is not any officially supported image. This will be changed soon.
-
 ## Uninstalling
 
 If you need to remove the Jaeger components created by this template, run:
