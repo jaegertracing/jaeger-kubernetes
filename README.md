@@ -32,7 +32,8 @@ Once everything is ready, `kubectl get service jaeger-query` tells you where to 
 
 ### Persistent storage
 Even though this template uses a stateful Cassandra, backing storage is set to `emptyDir`. It's more
-appropriate to create a `PersistentVolumeClaim`/`PersistentVolume` and use it instead.
+appropriate to create a `PersistentVolumeClaim`/`PersistentVolume` and use it instead. Note that this
+Cassandra deployment does not support deleting pods or scaling down.
 
 ## Uninstalling
 
