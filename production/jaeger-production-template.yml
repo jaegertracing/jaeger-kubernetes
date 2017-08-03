@@ -154,8 +154,8 @@ items:
             protocol: TCP
           command:
           - "/go/bin/collector-linux"
-          - "-cassandra.servers=cassandra"
-          - "-cassandra.keyspace=jaeger_v1_dc1"
+          - "--cassandra.servers=cassandra"
+          - "--cassandra.keyspace=jaeger_v1_dc1"
         dnsPolicy: ClusterFirst
         restartPolicy: Always
 - apiVersion: v1
@@ -203,8 +203,8 @@ items:
             protocol: TCP
           command:
           - "/go/bin/query-linux"
-          - "-cassandra.servers=cassandra"
-          - "-cassandra.keyspace=jaeger_v1_dc1"
+          - "--cassandra.servers=cassandra"
+          - "--cassandra.keyspace=jaeger_v1_dc1"
           - "--query.static-files=/go/jaeger-ui/"
           readinessProbe:
             httpGet:
@@ -246,7 +246,7 @@ items:
           image: jaegertracing/jaeger-agent:0.5
           command:
           - "/go/bin/agent-linux"
-          - "-collector.host-port=jaeger-collector:14267"
+          - "--collector.host-port=jaeger-collector:14267"
           ports:
           - containerPort: 5775
             protocol: UDP
