@@ -19,7 +19,7 @@ script:
   - ./mvnw clean verify -Pe2e
 
 after_script:
-  - minikube ssh "docker images --no-trunc=true"
+  - docker images --no-trunc=true
 
 env:
   global:
