@@ -48,6 +48,7 @@ public class BaseETest {
 
   private static final String QUERY_SERVICE_NAME = "jaeger-query";
   private static final String COLLECTOR_SERVICE_NAME = "jaeger-collector";
+  private static final String ZIPKIN_SERVICE_NAME = "zipkin";
 
   private OkHttpClient okHttpClient = new OkHttpClient.Builder()
       .build();
@@ -62,6 +63,12 @@ public class BaseETest {
   @PortForward
   @ArquillianResource
   private URL collectorUrl;
+
+  @Port(9411)
+  @Named(ZIPKIN_SERVICE_NAME)
+  @PortForward
+  @ArquillianResource
+  private URL zipkinUrl;
 
   @Test
   public void testUiResponds() throws IOException, InterruptedException {

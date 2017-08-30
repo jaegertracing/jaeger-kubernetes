@@ -120,7 +120,7 @@ items:
       spec:
         containers:
         - name: jaeger-cassandra-schema
-          image: jaegertracing/jaeger-cassandra-schema:0.5
+          image: jaegertracing/jaeger-cassandra-schema:0.6
           env:
             - name: MODE
               value: "prod"
@@ -145,12 +145,17 @@ items:
           jaeger-infra: collector-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-collector:0.5
+        - env:
+          - name: COLLECTOR_ZIPKIN_HTTP_PORT
+            value: "9411"
+          image: jaegertracing/jaeger-collector:0.6
           name: jaeger-collector
           ports:
           - containerPort: 14267
             protocol: TCP
           - containerPort: 14268
+            protocol: TCP
+          - containerPort: 9411
             protocol: TCP
           command:
           - "/go/bin/collector-linux"
@@ -175,6 +180,26 @@ items:
       port: 14268
       protocol: TCP
       targetPort: 14268
+    - name: jaeger-collector-zipkin
+      port: 9411
+      protocol: TCP
+      targetPort: 9411
+    selector:
+      jaeger-infra: collector-pod
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: zipkin
+    labels:
+      app: jaeger
+      jaeger-infra: zipkin-service
+  spec:
+    ports:
+    - name: jaeger-collector-zipkin
+      port: 9411
+      protocol: TCP
+      targetPort: 9411
     selector:
       jaeger-infra: collector-pod
     type: ClusterIP
@@ -196,7 +221,7 @@ items:
           jaeger-infra: query-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-query:0.5
+        - image: jaegertracing/jaeger-query:0.6
           name: jaeger-query
           ports:
           - containerPort: 16686
@@ -228,3 +253,4 @@ items:
     selector:
       jaeger-infra: query-pod
     type: LoadBalancer
+
