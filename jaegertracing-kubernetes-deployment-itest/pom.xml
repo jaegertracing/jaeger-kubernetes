@@ -38,6 +38,17 @@
     </dependency>
 
     <dependency>
+      <groupId>io.zipkin.brave</groupId>
+      <artifactId>brave</artifactId>
+      <version>${version.io.zipkin.brave}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.zipkin.reporter</groupId>
+      <artifactId>zipkin-sender-okhttp3</artifactId>
+      <version>${version.io.zipkin.reporter}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-standalone</artifactId>
       <version>${version.org.jboss.arquillian}</version>
