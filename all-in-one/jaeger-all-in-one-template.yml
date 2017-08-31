@@ -33,7 +33,10 @@ items:
           jaeger-infra: jaeger-pod
       spec:
           containers:
-            - image: jaegertracing/all-in-one
+          -   env:
+              - name: COLLECTOR_ZIPKIN_HTTP_PORT
+                value: "9411"
+              image: jaegertracing/all-in-one
               name: jaeger
               ports:
                 - containerPort: 5775
@@ -43,6 +46,8 @@ items:
                 - containerPort: 6832
                   protocol: UDP
                 - containerPort: 16686
+                  protocol: TCP
+                - containerPort: 9411
                   protocol: TCP
               readinessProbe:
                 httpGet:
@@ -82,6 +87,10 @@ items:
       port: 14268
       protocol: TCP
       targetPort: 14268
+    - name: jaeger-collector-zipkin
+      port: 9411
+      protocol: TCP
+      targetPort: 9411
     selector:
       jaeger-infra: jaeger-pod
     type: ClusterIP
@@ -109,3 +118,20 @@ items:
     clusterIP: None
     selector:
       jaeger-infra: jaeger-pod
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: zipkin
+    labels:
+      app: jaeger
+      jaeger-infra: zipkin-service
+  spec:
+    ports:
+    - name: jaeger-collector-zipkin
+      port: 9411
+      protocol: TCP
+      targetPort: 9411
+    clusterIP: None
+    selector:
+      jaeger-infra: jaeger-pod
+

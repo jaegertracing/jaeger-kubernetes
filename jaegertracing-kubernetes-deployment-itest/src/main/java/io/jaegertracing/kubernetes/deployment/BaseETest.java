@@ -20,10 +20,15 @@ import com.uber.jaeger.metrics.StatsFactoryImpl;
 import com.uber.jaeger.reporters.RemoteReporter;
 import com.uber.jaeger.samplers.ConstSampler;
 import com.uber.jaeger.senders.HttpSender;
+
+import brave.Tracing;
 import io.opentracing.Span;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import zipkin.reporter.AsyncReporter;
+import zipkin.reporter.okhttp3.OkHttpSender;
+
 import org.arquillian.cube.kubernetes.annotations.Named;
 import org.arquillian.cube.kubernetes.annotations.Port;
 import org.arquillian.cube.kubernetes.annotations.PortForward;
@@ -48,6 +53,7 @@ public class BaseETest {
 
   private static final String QUERY_SERVICE_NAME = "jaeger-query";
   private static final String COLLECTOR_SERVICE_NAME = "jaeger-collector";
+  private static final String ZIPKIN_SERVICE_NAME = "zipkin";
 
   private OkHttpClient okHttpClient = new OkHttpClient.Builder()
       .build();
@@ -63,6 +69,12 @@ public class BaseETest {
   @ArquillianResource
   private URL collectorUrl;
 
+  @Port(9411)
+  @Named(ZIPKIN_SERVICE_NAME)
+  @PortForward
+  @ArquillianResource
+  private URL zipkinUrl;
+
   @Test
   public void testUiResponds() throws IOException, InterruptedException {
     Request request = new Request.Builder()
@@ -77,7 +89,7 @@ public class BaseETest {
 
   @Test
   public void testReportSpanToCollector() throws IOException, InterruptedException {
-    Tracer tracer = createTracer("service1");
+    Tracer tracer = createJaegerTracer("service1");
     tracer.buildSpan("foo").startManual().finish();
     tracer.close();
 
@@ -99,11 +111,34 @@ public class BaseETest {
   }
 
   @Test
+  public void testReportZipkinSpanToCollector() throws IOException, InterruptedException {
+      Tracing tracing = createZipkinTracer("service2");
+      tracing.tracer().newTrace().name("foo").start().finish();
+      tracing.close();
+
+      Request request = new Request.Builder()
+          .url(queryUrl + "api/traces?service=service2")
+          .get()
+          .build();
+
+      await().atMost(5, TimeUnit.SECONDS).until(() -> {
+        Response response = okHttpClient.newCall(request).execute();
+        String body = response.body().string();
+        return body.contains("foo");
+      });
+
+      try (Response response = okHttpClient.newCall(request).execute()) {
+        assertEquals(200, response.code());
+        assertTrue(response.body().string().contains("foo"));
+      }
+  }
+
+  @Test
   public void testDependencyLinks() throws IOException, InterruptedException {
-    Tracer tracer1 = createTracer("service11");
+    Tracer tracer1 = createJaegerTracer("service11");
     Span span1 = tracer1.buildSpan("foo").startManual();
 
-    Tracer tracer2 = createTracer("service22");
+    Tracer tracer2 = createJaegerTracer("service22");
     tracer2.buildSpan("foo").asChildOf(span1).startManual().finish();
     tracer2.close();
 
@@ -139,10 +174,17 @@ public class BaseETest {
     assertEquals(200, response.code());
   }
 
-  protected com.uber.jaeger.Tracer createTracer(String serviceName) {
+  protected com.uber.jaeger.Tracer createJaegerTracer(String serviceName) {
     return new com.uber.jaeger.Tracer.Builder(serviceName,
         new RemoteReporter(new HttpSender(collectorUrl + "api/traces", 65000), 1, 100,
             new Metrics(new StatsFactoryImpl(new NullStatsReporter()))), new ConstSampler(true))
         .build();
+  }
+
+  protected Tracing createZipkinTracer(String serviceName) {
+    return Tracing.newBuilder()
+            .localServiceName(serviceName)
+            .reporter(AsyncReporter.builder(OkHttpSender.create(zipkinUrl + "api/v1/spans"))
+                    .build()).build();
   }
 }
