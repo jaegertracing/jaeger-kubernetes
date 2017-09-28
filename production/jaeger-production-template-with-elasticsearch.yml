@@ -76,7 +76,7 @@ items:
         - env:
           - name: COLLECTOR_ZIPKIN_HTTP_PORT
             value: "9411"
-          image: jaegertracing/jaeger-collector:0.7
+          image: jaegertracing/jaeger-collector:0.8
           name: jaeger-collector
           ports:
           - containerPort: 14267
@@ -87,14 +87,10 @@ items:
             protocol: TCP
           command:
             - "/go/bin/collector-linux"
-            - "--span-storage.type"
-            - elasticsearch
-            - "--es.server-urls"
-            - http://elasticsearch:9200
-            - "--es.username"
-            - "elastic"
-            - "--es.password"
-            - "changeme"
+            - "--span-storage.type=elasticsearch"
+            - "--es.server-urls=http://elasticsearch:9200"
+            - "--es.username=elastic"
+            - "--es.password=changeme"
         dnsPolicy: ClusterFirst
         restartPolicy: Always
 - apiVersion: v1
@@ -155,23 +151,18 @@ items:
           jaeger-infra: query-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-query:0.7
+        - image: jaegertracing/jaeger-query:0.8
           name: jaeger-query
           ports:
           - containerPort: 16686
             protocol: TCP
           command:
           - "/go/bin/query-linux"
-          - "--span-storage.type"
-          - elasticsearch
-          - "--es.server-urls"
-          - http://elasticsearch:9200
-          - "--es.username"
-          - "elastic"
-          - "--es.password"
-          - "changeme"
-          - "--query.static-files"
-          - /go/jaeger-ui/
+          - "--span-storage.type=elasticsearch"
+          - "--es.server-urls=http://elasticsearch:9200"
+          - "--es.username=elastic"
+          - "--es.password=changeme"
+          - "--query.static-files=/go/jaeger-ui/"
           readinessProbe:
             httpGet:
               path: "/"
