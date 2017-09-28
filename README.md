@@ -25,7 +25,7 @@ kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kuberne
 Or you can deploy the Collector, Query Service (with UI) and ElasticSearch storage (StatefulSet) as separate individually scalable services.
 
 ```bash
-kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production/jaeger-production-template-with-elasticsearch.yml
+kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production-with-elasticsearch/jaeger-production-template-with-elasticsearch.yml
 ```
 
 Note that it's OK to have the Query and Collector pods to be in an error state for the first minute or so. This is
