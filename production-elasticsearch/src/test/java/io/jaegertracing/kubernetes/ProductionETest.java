@@ -22,7 +22,6 @@ import org.junit.Ignore;
  */
 public class ProductionETest extends BaseETest {
 
-  @Ignore("dependency links returns 404 because of old Cassandra image")
   public void testDependencyLinks() throws IOException, InterruptedException {
   }
 }
