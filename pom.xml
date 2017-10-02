@@ -50,6 +50,7 @@
     <module>jaegertracing-kubernetes-deployment-itest</module>
     <module>all-in-one</module>
     <module>production</module>
+    <module>production-elasticsearch</module>
   </modules>
 
   <dependencyManagement>

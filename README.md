@@ -21,6 +21,11 @@ This template deploys the Collector, Query Service (with UI) and Cassandra stora
 ```bash
 kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production/jaeger-production-template.yml
 ```
+Or you can deploy the Collector, Query Service (with UI) and ElasticSearch storage (StatefulSet) as separate individually scalable services.
+
+```bash
+kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production-with-elasticsearch/jaeger-production-template-with-elasticsearch.yml
+```
 
 Note that it's OK to have the Query and Collector pods to be in an error state for the first minute or so. This is
 because these components attempt to connect to Cassandra right away and hard fail if they can't after N attempts.
@@ -73,7 +78,7 @@ values already.
 ### Persistent storage
 Even though this template uses a stateful Cassandra, backing storage is set to `emptyDir`. It's more
 appropriate to create a `PersistentVolumeClaim`/`PersistentVolume` and use it instead. Note that this
-Cassandra deployment does not support deleting pods or scaling down, as this might require 
+Cassandra deployment does not support deleting pods or scaling down, as this might require
 administrative tasks that are dependent on the final deployment architecture.
 
 ## Uninstalling

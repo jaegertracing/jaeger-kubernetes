@@ -1,0 +1,187 @@
+#
+# Copyright 2017 The Jaeger Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+# in compliance with the License. You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under the License
+# is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+# or implied. See the License for the specific language governing permissions and limitations under
+# the License.
+#
+
+apiVersion: v1
+kind: List
+items:
+- apiVersion: apps/v1beta1
+  kind: StatefulSet
+  metadata:
+    name: elasticsearch
+  spec:
+    serviceName: elasticsearch
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: elasticsearch
+          type: databases
+          availability: restricted
+      spec:
+        containers:
+          - name: elasticsearch
+            image: docker.elastic.co/elasticsearch/elasticsearch:5.6.0
+            imagePullPolicy: Always
+            command:
+              - bin/elasticsearch
+            args:
+              - "-Ehttp.host=0.0.0.0"
+              - "-Etransport.host=127.0.0.1"
+            volumeMounts:
+              - name: data
+                mountPath: /data
+        volumes:
+          - name: data
+            emptyDir: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: elasticsearch
+  spec:
+    clusterIP: None
+    selector:
+      app: elasticsearch
+    ports:
+    - port: 9200
+      name: elasticsearch
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: jaeger-collector
+    labels:
+      app: jaeger
+      jaeger-infra: collector-deployment
+  spec:
+    replicas: 1
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: jaeger
+          jaeger-infra: collector-pod
+      spec:
+        containers:
+        - env:
+          - name: COLLECTOR_ZIPKIN_HTTP_PORT
+            value: "9411"
+          image: jaegertracing/jaeger-collector:0.8
+          name: jaeger-collector
+          ports:
+          - containerPort: 14267
+            protocol: TCP
+          - containerPort: 14268
+            protocol: TCP
+          - containerPort: 9411
+            protocol: TCP
+          command:
+            - "/go/bin/collector-linux"
+            - "--span-storage.type=elasticsearch"
+            - "--es.server-urls=http://elasticsearch:9200"
+            - "--es.username=elastic"
+            - "--es.password=changeme"
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: jaeger-collector
+    labels:
+      app: jaeger
+      jaeger-infra: collector-service
+  spec:
+    ports:
+    - name: jaeger-collector-tchannel
+      port: 14267
+      protocol: TCP
+      targetPort: 14267
+    - name: jaeger-collector-http
+      port: 14268
+      protocol: TCP
+      targetPort: 14268
+    - name: jaeger-collector-zipkin
+      port: 9411
+      protocol: TCP
+      targetPort: 9411
+    selector:
+      jaeger-infra: collector-pod
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: zipkin
+    labels:
+      app: jaeger
+      jaeger-infra: zipkin-service
+  spec:
+    ports:
+    - name: jaeger-collector-zipkin
+      port: 9411
+      protocol: TCP
+      targetPort: 9411
+    selector:
+      jaeger-infra: collector-pod
+    type: ClusterIP
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: jaeger-query
+    labels:
+      app: jaeger
+      jaeger-infra: query-deployment
+  spec:
+    replicas: 1
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: jaeger
+          jaeger-infra: query-pod
+      spec:
+        containers:
+        - image: jaegertracing/jaeger-query:0.8
+          name: jaeger-query
+          ports:
+          - containerPort: 16686
+            protocol: TCP
+          command:
+          - "/go/bin/query-linux"
+          - "--span-storage.type=elasticsearch"
+          - "--es.server-urls=http://elasticsearch:9200"
+          - "--es.username=elastic"
+          - "--es.password=changeme"
+          - "--query.static-files=/go/jaeger-ui/"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: 16686
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: jaeger-query
+    labels:
+      app: jaeger
+      jaeger-infra: query-service
+  spec:
+    ports:
+    - name: jaeger-query
+      port: 80
+      protocol: TCP
+      targetPort: 16686
+    selector:
+      jaeger-infra: query-pod
+    type: LoadBalancer
