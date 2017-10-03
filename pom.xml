@@ -27,20 +27,20 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <rootProject.basedir>${project.basedir}</rootProject.basedir>
 
-    <version.com.squareup.okhttp3-okhttp>3.8.0</version.com.squareup.okhttp3-okhttp>
-    <version.com.uber.jaeger-jaeger-core>0.20.5</version.com.uber.jaeger-jaeger-core>
+    <version.com.squareup.okhttp3-okhttp>3.9.0</version.com.squareup.okhttp3-okhttp>
+    <version.com.uber.jaeger-jaeger-core>0.21.0</version.com.uber.jaeger-jaeger-core>
     <version.junit>4.12</version.junit>
     <version.org.awaitility-awaitility>3.0.0</version.org.awaitility-awaitility>
-    <version.org.arquillian.cube>1.7.0</version.org.arquillian.cube>
+    <version.org.arquillian.cube>1.9.0</version.org.arquillian.cube>
     <version.org.jboss.arquillian>1.1.13.Final</version.org.jboss.arquillian>
-    <version.io.fabric8.kubernetes-client>2.5.2</version.io.fabric8.kubernetes-client>
-    <version.io.zipkin.brave>4.5.1</version.io.zipkin.brave>
-    <version.io.zipkin.reporter>1.0.0</version.io.zipkin.reporter>
+    <version.io.fabric8.kubernetes-client>2.6.3</version.io.fabric8.kubernetes-client>
+    <version.io.zipkin.brave>4.8.0</version.io.zipkin.brave>
+    <version.io.zipkin.reporter>1.1.1</version.io.zipkin.reporter>
 
     <!-- plugins -->
     <version.maven-license-plugin>3.0</version.maven-license-plugin>
-    <version.maven-surefire-plugin>2.20</version.maven-surefire-plugin>
-    <version.maven-failsafe-plugin>2.20</version.maven-failsafe-plugin>
+    <version.maven-surefire-plugin>2.20.1</version.maven-surefire-plugin>
+    <version.maven-failsafe-plugin>2.20.1</version.maven-failsafe-plugin>
     <version.maven-plugin>0.3.4</version.maven-plugin>
   </properties>
 
