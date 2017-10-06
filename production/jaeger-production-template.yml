@@ -126,7 +126,7 @@ items:
               value: "prod"
             - name: DATACENTER
               value: "dc1"
-        restartPolicy: Never
+        restartPolicy: OnFailure
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
