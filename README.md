@@ -81,6 +81,20 @@ appropriate to create a `PersistentVolumeClaim`/`PersistentVolume` and use it in
 Cassandra deployment does not support deleting pods or scaling down, as this might require
 administrative tasks that are dependent on the final deployment architecture.
 
+### Service Dependencies
+Jaeger production deployment needs an external process to derive dependency links between
+services. Project [spark-dependencies](https://github.com/jaegertracing/spark-dependencies) provides
+this functionality.
+
+This job should be periodically run before end of a day. The following command creates `CronJob`
+scheduled 5 minutes before the midnight.
+
+```bash
+kubectl run jaeger-spark-dependencies --schedule="55 23 * * *" --env="STORAGE=cassandra" --env="CASSANDRA_CONTACT_POINTS=cassandra:9042"  --restart=Never --image=jaegertracing/spark-dependencies
+```
+
+If you want to run the job only once and immediately then remove scheduled flag.
+
 ## Uninstalling
 If you need to remove the Jaeger components created by this template, run:
 
