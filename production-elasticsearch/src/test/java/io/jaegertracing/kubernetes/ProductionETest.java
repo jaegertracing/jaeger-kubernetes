@@ -31,7 +31,7 @@ public class ProductionETest extends BaseETest {
   /**
    * We need to initialize ES storage, before we proceed to tests for two reasons:
    * 1. sometimes first span is not stored
-   * 2. jaeger-query returns 500 is ES storage is empty (without indices)
+   * 2. jaeger-query returns 500 is ES storage is empty (without indices) https://github.com/jaegertracing/jaeger/issues/464
    */
   @Before
   public void before() {
