@@ -13,14 +13,45 @@
  */
 package io.jaegertracing.kubernetes;
 
+import com.uber.jaeger.Tracer;
 import io.jaegertracing.kubernetes.deployment.BaseETest;
 import java.io.IOException;
-import org.junit.Ignore;
+import java.util.UUID;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.junit.Before;
+
+import static org.awaitility.Awaitility.await;
 
 /**
  * @author Pavol Loffay
  */
 public class ProductionETest extends BaseETest {
+
+  /**
+   * We need to initialize ES storage, before we proceed to tests for two reasons:
+   * 1. sometimes first span is not stored
+   * 2. jaeger-query returns 500 is ES storage is empty (without indices)
+   */
+  @Before
+  public void before() {
+    String serviceName = UUID.randomUUID().toString().replace("-", "");
+    Tracer tracer = createJaegerTracer(serviceName);
+    String operationName = UUID.randomUUID().toString().replace("-", "");
+    tracer.buildSpan(operationName).startManual().finish();
+    tracer.close();
+
+    Request request = new Request.Builder()
+        .url(queryUrl + "api/traces?service=" + serviceName)
+        .get()
+        .build();
+
+    await().until(() -> {
+      Response response = okHttpClient.newCall(request).execute();
+      String body = response.body().string();
+      return body.contains(operationName);
+    });
+  }
 
   public void testDependencyLinks() throws IOException, InterruptedException {
   }
