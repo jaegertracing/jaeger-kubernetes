@@ -25,9 +25,10 @@ items:
     template:
       metadata:
         labels:
-          app: elasticsearch
+          app: jaeger
           type: databases
           availability: restricted
+          jaeger-infra: elasticsearch-statefulset
       spec:
         containers:
           - name: elasticsearch
@@ -48,6 +49,9 @@ items:
   kind: Service
   metadata:
     name: elasticsearch
+    labels:
+      app: jaeger
+      jaeger-infra: elasticsearch-service
   spec:
     clusterIP: None
     selector:
