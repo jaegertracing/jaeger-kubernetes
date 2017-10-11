@@ -19,16 +19,17 @@ items:
   kind: StatefulSet
   metadata:
     name: elasticsearch
+    labels:
+      app: jaeger
+      jaeger-infra: elasticsearch-statefulset
   spec:
     serviceName: elasticsearch
-    replicas: 1
+    replicas: 2
     template:
       metadata:
         labels:
-          app: jaeger
-          type: databases
-          availability: restricted
-          jaeger-infra: elasticsearch-statefulset
+          app: jaeger-elasticsearch
+          jaeger-infra: elasticsearch-replica
       spec:
         containers:
           - name: elasticsearch
@@ -39,6 +40,7 @@ items:
             args:
               - "-Ehttp.host=0.0.0.0"
               - "-Etransport.host=127.0.0.1"
+              - "-Ecluster.name=foobar"
             volumeMounts:
               - name: data
                 mountPath: /data
@@ -55,10 +57,12 @@ items:
   spec:
     clusterIP: None
     selector:
-      app: elasticsearch
+      app: jaeger-elasticsearch
     ports:
     - port: 9200
       name: elasticsearch
+    - port: 9300
+      name: transport
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
