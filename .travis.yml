@@ -18,8 +18,21 @@ cache:
   directories:
   - $HOME/.m2/repository
 
-script:
-  - ./mvnw clean verify -Pe2e
+install:
+  # Override default travis to use the maven wrapper
+  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+jobs:
+  include:
+    - stage: test
+      env: [ NAME=all-in-one ]
+      script: ./mvnw clean verify -Pall-in-one
+
+    - env: [ NAME=cassandra ]
+      script: ./mvnw clean verify -Pcassandra
+
+    - env: [ NAME=elasticsearch ]
+      script: ./mvnw clean verify -Pelasticsearch
 
 after_script:
   - docker images --no-trunc=true

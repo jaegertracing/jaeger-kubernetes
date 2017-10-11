@@ -55,7 +55,7 @@
 
   <profiles>
     <profile>
-      <id>e2e</id>
+      <id>all-in-one</id>
       <build>
         <plugins>
           <plugin>

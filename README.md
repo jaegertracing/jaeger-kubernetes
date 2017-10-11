@@ -109,7 +109,7 @@ kubernetes cluster (via `kubectl`). When executing tests from IDE make sure that
 
 ```bash
 minikube start
-./mvnw clean verify -Pe2e
+./mvnw clean verify -Pcassandra,elasticsearch,all-in-one
 ```
 
    [ci-img]: https://travis-ci.org/jaegertracing/jaeger-kubernetes.svg?branch=master
