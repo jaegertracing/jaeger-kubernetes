@@ -20,6 +20,7 @@ import org.junit.Ignore;
 /**
  * @author Pavol Loffay
  */
+@Ignore
 public class CassandraETest extends BaseETest {
 
   @Ignore("It requires spark job")
