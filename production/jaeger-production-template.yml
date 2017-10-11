@@ -145,9 +145,6 @@ items:
           jaeger-infra: collector-pod
       spec:
         containers:
-        - env:
-          - name: COLLECTOR_ZIPKIN_HTTP_PORT
-            value: "9411"
           image: jaegertracing/jaeger-collector:0.6
           name: jaeger-collector
           ports:
@@ -161,6 +158,7 @@ items:
           - "/go/bin/collector-linux"
           - "--cassandra.servers=cassandra"
           - "--cassandra.keyspace=jaeger_v1_dc1"
+          - "--collector.zipkin.http-port=9411"
         dnsPolicy: ClusterFirst
         restartPolicy: Always
 - apiVersion: v1

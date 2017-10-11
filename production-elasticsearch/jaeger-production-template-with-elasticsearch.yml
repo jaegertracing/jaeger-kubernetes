@@ -81,9 +81,6 @@ items:
           jaeger-infra: collector-pod
       spec:
         containers:
-        - env:
-          - name: COLLECTOR_ZIPKIN_HTTP_PORT
-            value: "9411"
           image: jaegertracing/jaeger-collector:0.8
           name: jaeger-collector
           ports:
@@ -99,6 +96,7 @@ items:
             - "--es.server-urls=http://elasticsearch:9200"
             - "--es.username=elastic"
             - "--es.password=changeme"
+            - "--collector.zipkin.http-port=9411"
         dnsPolicy: ClusterFirst
         restartPolicy: Always
 - apiVersion: v1
