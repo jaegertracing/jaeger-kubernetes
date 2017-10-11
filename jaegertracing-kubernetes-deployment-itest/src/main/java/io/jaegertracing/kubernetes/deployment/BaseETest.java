@@ -67,13 +67,13 @@ public class BaseETest {
   @Named(COLLECTOR_SERVICE_NAME)
   @PortForward
   @ArquillianResource
-  protected URL collectorUrl;
+  private URL collectorUrl;
 
   @Port(9411)
   @Named(ZIPKIN_SERVICE_NAME)
   @PortForward
   @ArquillianResource
-  protected URL zipkinUrl;
+  private URL zipkinUrl;
 
   @Test
   public void testUiResponds() throws IOException, InterruptedException {

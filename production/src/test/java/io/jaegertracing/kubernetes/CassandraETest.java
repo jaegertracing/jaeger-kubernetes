@@ -20,9 +20,9 @@ import org.junit.Ignore;
 /**
  * @author Pavol Loffay
  */
-public class ProductionETest extends BaseETest {
+public class CassandraETest extends BaseETest {
 
-  @Ignore("dependency links returns 404 because of old Cassandra image")
+  @Ignore("It requires spark job")
   public void testDependencyLinks() throws IOException, InterruptedException {
   }
 }

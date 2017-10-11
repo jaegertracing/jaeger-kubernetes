@@ -20,13 +20,14 @@ import java.util.UUID;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.junit.Before;
+import org.junit.Ignore;
 
 import static org.awaitility.Awaitility.await;
 
 /**
  * @author Pavol Loffay
  */
-public class ProductionETest extends BaseETest {
+public class ElasticearchETest extends BaseETest {
 
   /**
    * We need to initialize ES storage, before we proceed to tests for two reasons:
@@ -53,6 +54,7 @@ public class ProductionETest extends BaseETest {
     });
   }
 
+  @Ignore("It requires spark job")
   public void testDependencyLinks() throws IOException, InterruptedException {
   }
 }

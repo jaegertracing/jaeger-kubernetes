@@ -14,6 +14,7 @@
 package io.jaegertracing.kubernetes;
 
 import io.jaegertracing.kubernetes.deployment.BaseETest;
+import org.junit.Ignore;
 
 /**
  * @author Pavol Loffay
