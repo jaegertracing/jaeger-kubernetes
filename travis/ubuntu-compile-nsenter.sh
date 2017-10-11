@@ -18,6 +18,6 @@ set -e
 sudo apt-get update
 sudo apt-get install libncurses5-dev libslang2-dev gettext zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf automake autopoint libtool
 mkdir .tmp || true
-wget https://www.kernel.org/pub/linux/utils/util-linux/v2.24/util-linux-2.24.1.tar.gz -qO - | tar -xz -C .tmp/
-cd .tmp/util-linux-2.24.1 && ./autogen.sh && ./configure && make nsenter
+wget https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz -qO - | tar -xz -C .tmp/
+cd .tmp/util-linux-2.30.2 && ./autogen.sh && ./configure && make nsenter
 
