@@ -17,6 +17,7 @@ import com.uber.jaeger.Tracer;
 import io.jaegertracing.kubernetes.deployment.BaseETest;
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.junit.Before;
@@ -35,7 +36,9 @@ public class ElasticearchETest extends BaseETest {
    * 2. jaeger-query returns 500 is ES storage is empty (without indices) https://github.com/jaegertracing/jaeger/issues/464
    */
   @Before
-  public void before() {
+  public void before() throws InterruptedException {
+    TimeUnit.SECONDS.sleep(8);
+
     String serviceName = UUID.randomUUID().toString().replace("-", "");
     Tracer tracer = createJaegerTracer(serviceName);
     String operationName = UUID.randomUUID().toString().replace("-", "");
