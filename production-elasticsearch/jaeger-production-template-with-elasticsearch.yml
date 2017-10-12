@@ -37,6 +37,11 @@ items:
             imagePullPolicy: Always
             command:
               - bin/elasticsearch
+            env:
+#            - name: ES_HEAP_SIZE
+#              value: "128m"
+            - name: ES_JAVA_OPTS
+              value: "-Xms256m -Xmx512m"
             args:
               - "-Ehttp.host=0.0.0.0"
               - "-Etransport.host=127.0.0.1"
