@@ -37,7 +37,7 @@ public class ElasticearchETest extends BaseETest {
    */
   @Before
   public void before() throws InterruptedException {
-    TimeUnit.SECONDS.sleep(8);
+    TimeUnit.SECONDS.sleep(15);
 
     String serviceName = UUID.randomUUID().toString().replace("-", "");
     Tracer tracer = createJaegerTracer(serviceName);
