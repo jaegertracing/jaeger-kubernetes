@@ -112,6 +112,7 @@ items:
             - "--es.server-urls=http://elasticsearch:9200"
             - "--es.username=elastic"
             - "--es.password=changeme"
+            - "--es.num-shards=1"
         dnsPolicy: ClusterFirst
         restartPolicy: Always
 - apiVersion: v1
@@ -184,6 +185,7 @@ items:
           - "--es.username=elastic"
           - "--es.password=changeme"
           - "--query.static-files=/go/jaeger-ui/"
+          - "--es.num-shards=1"
           readinessProbe:
             httpGet:
               path: "/"
