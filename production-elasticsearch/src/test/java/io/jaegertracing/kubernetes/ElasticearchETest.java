@@ -17,16 +17,18 @@ import com.uber.jaeger.Tracer;
 import io.jaegertracing.kubernetes.deployment.BaseETest;
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.junit.Before;
+import org.junit.Ignore;
 
 import static org.awaitility.Awaitility.await;
 
 /**
  * @author Pavol Loffay
  */
-public class ProductionETest extends BaseETest {
+public class ElasticearchETest extends BaseETest {
 
   /**
    * We need to initialize ES storage, before we proceed to tests for two reasons:
@@ -34,7 +36,7 @@ public class ProductionETest extends BaseETest {
    * 2. jaeger-query returns 500 is ES storage is empty (without indices) https://github.com/jaegertracing/jaeger/issues/464
    */
   @Before
-  public void before() {
+  public void before() throws InterruptedException {
     String serviceName = UUID.randomUUID().toString().replace("-", "");
     Tracer tracer = createJaegerTracer(serviceName);
     String operationName = UUID.randomUUID().toString().replace("-", "");
@@ -53,6 +55,7 @@ public class ProductionETest extends BaseETest {
     });
   }
 
+  @Ignore("It requires spark job")
   public void testDependencyLinks() throws IOException, InterruptedException {
   }
 }

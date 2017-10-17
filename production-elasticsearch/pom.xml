@@ -55,7 +55,7 @@
 
   <profiles>
     <profile>
-      <id>e2e</id>
+      <id>elasticsearch</id>
       <build>
         <plugins>
           <plugin>

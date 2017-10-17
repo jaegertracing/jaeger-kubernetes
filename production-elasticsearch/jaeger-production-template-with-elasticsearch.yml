@@ -24,7 +24,7 @@ items:
       jaeger-infra: elasticsearch-statefulset
   spec:
     serviceName: elasticsearch
-    replicas: 2
+    replicas: 1
     template:
       metadata:
         labels:
@@ -40,10 +40,23 @@ items:
             args:
               - "-Ehttp.host=0.0.0.0"
               - "-Etransport.host=127.0.0.1"
-              - "-Ecluster.name=foobar"
             volumeMounts:
               - name: data
                 mountPath: /data
+            readinessProbe:
+              exec:
+                command:
+                - curl
+                - --fail
+                - --silent
+                - --output
+                - /dev/null
+                - --user
+                - elastic:changeme
+                - localhost:9200
+              initialDelaySeconds: 5
+              periodSeconds: 5
+              timeoutSeconds: 4
         volumes:
           - name: data
             emptyDir: {}

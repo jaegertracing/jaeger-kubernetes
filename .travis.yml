@@ -5,9 +5,12 @@ language: java
 jdk:
   - oraclejdk8
 
+services:
+  - docker
+
 before_install:
 # install nsenter which is required for port forwarding
-  - travis/ubuntu-compile-nsenter.sh && sudo cp .tmp/util-linux-2.24.1/nsenter /usr/bin
+  - travis/ubuntu-compile-nsenter.sh && sudo cp .tmp/util-linux-2.30.2/nsenter /usr/bin
   - travis/install-start-minikube.sh && export PATH=`pwd`:${PATH} # set minikube and kubectl to PATH
   - kubectl get all --all-namespaces
 
@@ -15,8 +18,21 @@ cache:
   directories:
   - $HOME/.m2/repository
 
-script:
-  - ./mvnw clean verify -Pe2e
+install:
+  # Override default travis to use the maven wrapper
+  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+jobs:
+  include:
+    - stage: test
+      env: [ NAME=all-in-one ]
+      script: ./mvnw clean verify -Pall-in-one
+
+    - env: [ NAME=cassandra ]
+      script: ./mvnw clean verify -Pcassandra
+
+    - env: [ NAME=elasticsearch ]
+      script: ./mvnw clean verify -Pelasticsearch
 
 after_script:
   - docker images --no-trunc=true
