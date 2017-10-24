@@ -25,7 +25,7 @@
   <artifactId>jaegertracing-kubernetes-production-elasticsearch</artifactId>
 
   <properties>
-    <template.name>jaeger-production-template-with-elasticsearch.yml</template.name>
+    <template.name>jaeger-production-template.yml</template.name>
     <rootProject.basedir>${project.basedir}/..</rootProject.basedir>
   </properties>
 
@@ -42,7 +42,7 @@
     <!-- Copy template to test resources -->
     <resources>
       <resource>
-        <directory>${project.basedir}</directory>
+        <directory>${rootProject.basedir}</directory>
         <includes>
           <include>${template.name}</include>
         </includes>

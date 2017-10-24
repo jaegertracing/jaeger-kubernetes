@@ -42,7 +42,7 @@
     <!-- Copy template to test resources -->
     <resources>
       <resource>
-        <directory>${project.basedir}</directory>
+        <directory>${rootProject.basedir}</directory>
         <includes>
           <include>${template.name}</include>
         </includes>
