@@ -16,21 +16,49 @@ If you are using `minikube` to setup your Kubernetes cluster, the command `minik
 can be used instead.
 
 ## Production setup
-This template deploys the Collector, Query Service (with UI) and Cassandra storage (StatefulSet) as separate individually scalable services.
 
-```bash
-kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production/jaeger-production-template.yml
-```
-Or you can deploy the Collector, Query Service (with UI) and ElasticSearch storage (StatefulSet) as separate individually scalable services.
+### Backing storage
 
-```bash
-kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production-elasticsearch/jaeger-production-template-with-elasticsearch.yml
-```
+The Jaeger Collector and Query require a backing storage to exist before being started up. As a starting point for your own 
+templates, we provide basic templates deploying Cassandra and Elasticsearch. None of them are ready for production and should
+be adapted before any real usage.
 
-Note that it's OK to have the Query and Collector pods to be in an error state for the first minute or so. This is
-because these components attempt to connect to Cassandra right away and hard fail if they can't after N attempts.
+To use our Cassandra template:
 
-Once everything is ready, `kubectl get service jaeger-query` tells you where to find Jaeger URL.
+    kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production/cassandra.yml
+
+For Elasticsearch, use:
+
+    kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production-elasticsearch/elasticsearch.yml
+
+The Cassandra template includes also a Kubernetes `Job` that creates the schema required by the Jaeger components. It's advisable
+to wait for this job to finish before deploying the Jaeger components. To check the status of the job, run:
+
+    kubectl get job jaeger-cassandra-schema-job
+
+The job should have `1` in the `SUCCESSFUL` column.
+
+### Jaeger configuration
+
+The Jaeger Collector, Query and Agent require a `ConfigMap` to exist on the same namespace, named `jaeger-configuration`.
+This `ConfigMap` is included in the storage templates, as each backing storage have their own specific configuration entries,
+but in your environment, you'll probably manage it differently.
+
+If changes are required for the configuration, the `edit` command can be used:
+
+    kubectl edit configmap jaeger-configuration
+
+### Jaeger components
+
+The main production template deploys the Collector and the Query Service (with UI) as separate individually scalable services.
+
+    kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/jaeger-production-template.yml
+
+If the backing storage is not ready by the time the Collector/Agent start, they will fail and Kubernetes will reschedule the
+pod. It's advisable to either wait for the backing storage to estabilize, or to ignore such failures for the first few minutes.
+
+Once everything is ready, `kubectl get service jaeger-query` tells you where to find Jaeger URL, or 
+`minikube service jaeger-query --url` when using `minikube`
 
 ### Deploying the agent as sidecar
 The Jaeger Agent is designed to be deployed local to your service, so that it can receive traces via UDP keeping your
