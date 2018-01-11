@@ -55,7 +55,7 @@ The main production template deploys the Collector and the Query Service (with U
     kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/jaeger-production-template.yml
 
 If the backing storage is not ready by the time the Collector/Agent start, they will fail and Kubernetes will reschedule the
-pod. It's advisable to either wait for the backing storage to estabilize, or to ignore such failures for the first few minutes.
+pod. It's advisable to either wait for the backing storage to stabilize, or to ignore such failures for the first few minutes.
 
 Once everything is ready, `kubectl get service jaeger-query` tells you where to find Jaeger URL, or 
 `minikube service jaeger-query --url` when using `minikube`
