@@ -123,6 +123,10 @@ kubectl run jaeger-spark-dependencies --schedule="55 23 * * *" --env="STORAGE=ca
 
 If you want to run the job only once and immediately then remove scheduled flag.
 
+## Helm support
+A curated [Chart for Kubernetes Helm](https://github.com/kubernetes/charts/tree/master/incubator/jaeger)
+that adds all components required to run Jaeger.
+
 ## Uninstalling
 If you need to remove the Jaeger components created by this template, run:
 
