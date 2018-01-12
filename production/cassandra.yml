@@ -23,7 +23,7 @@ items:
       app: jaeger
       jaeger-infra: configuration
   data:
-    span-storage: cassandra
+    span-storage-type: cassandra
     collector: |
       collector:
         zipkin:

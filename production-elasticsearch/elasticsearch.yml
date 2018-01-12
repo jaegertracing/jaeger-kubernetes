@@ -23,7 +23,7 @@ items:
       app: jaeger
       jaeger-infra: configuration
   data:
-    span-storage: elasticsearch
+    span-storage-type: elasticsearch
     collector: |
       es:
         server-urls: http://elasticsearch:9200

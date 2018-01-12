@@ -33,7 +33,7 @@ items:
           jaeger-infra: collector-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-collector:latest
+        - image: jaegertracing/jaeger-collector:1.1
           name: jaeger-collector
           command:
             - "/go/bin/collector-linux"
@@ -49,11 +49,11 @@ items:
           - name: jaeger-configuration-volume
             mountPath: /conf
           env:
-          - name: SPAN_STORAGE
+          - name: SPAN_STORAGE_TYPE
             valueFrom:
               configMapKeyRef:
                 name: jaeger-configuration
-                key: span-storage
+                key: span-storage-type
         volumes:
           - configMap:
               name: jaeger-configuration
@@ -119,7 +119,7 @@ items:
           jaeger-infra: query-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-query:latest
+        - image: jaegertracing/jaeger-query:1.1
           name: jaeger-query
           command:
             - "/go/bin/query-linux"
@@ -135,11 +135,11 @@ items:
           - name: jaeger-configuration-volume
             mountPath: /conf
           env:
-          - name: SPAN_STORAGE
+          - name: SPAN_STORAGE_TYPE
             valueFrom:
               configMapKeyRef:
                 name: jaeger-configuration
-                key: span-storage
+                key: span-storage-type
         volumes:
           - configMap:
               name: jaeger-configuration
