@@ -130,7 +130,7 @@ A curated [Chart for Kubernetes Helm](https://github.com/kubernetes/charts/tree/
 If you need to remove the Jaeger components created by this template, run:
 
 ```bash
-kubectl delete all,daemonset -l jaeger-infra
+kubectl delete all,daemonset,configmap -l jaeger-infra
 ```
 
 ## Testing
