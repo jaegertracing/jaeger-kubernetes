@@ -25,10 +25,12 @@ be adapted before any real usage.
 
 To use our Cassandra template:
 
+    kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production/configmap.yml
     kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production/cassandra.yml
 
 For Elasticsearch, use:
 
+    kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production-elasticsearch/configmap.yml
     kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/production-elasticsearch/elasticsearch.yml
 
 The Cassandra template includes also a Kubernetes `Job` that creates the schema required by the Jaeger components. It's advisable
