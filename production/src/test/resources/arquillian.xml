@@ -20,7 +20,7 @@
     http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
   <extension qualifier="kubernetes">
-    <property name="env.dependencies">file://${basedir}/cassandra.yml  file://${basedir}/configmap.yml</property>
+    <property name="env.dependencies">file://${basedir}/cassandra.yml,file://${basedir}/configmap.yml</property>
     <property name="env.config.resource.name">jaeger-production-template.yml</property>
     <property name="wait.timeout">600000</property>
     <!--<property name="namespace.destroy.enabled">false</property>-->
