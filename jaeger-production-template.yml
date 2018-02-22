@@ -33,7 +33,7 @@ items:
           jaeger-infra: collector-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-collector:1.1
+        - image: jaegertracing/jaeger-collector:1.2
           name: jaeger-collector
           command:
             - "/go/bin/collector-linux"
@@ -119,7 +119,7 @@ items:
           jaeger-infra: query-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-query:1.1
+        - image: jaegertracing/jaeger-query:1.2
           name: jaeger-query
           command:
             - "/go/bin/query-linux"
