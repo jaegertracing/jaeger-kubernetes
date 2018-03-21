@@ -145,5 +145,10 @@ minikube start
 ./mvnw clean verify -Pcassandra,elasticsearch,all-in-one
 ```
 
+## License
+  
+[Apache 2.0 License](./LICENSE).
+
+
    [ci-img]: https://travis-ci.org/jaegertracing/jaeger-kubernetes.svg?branch=master
    [ci]: https://travis-ci.org/jaegertracing/jaeger-kubernetes
