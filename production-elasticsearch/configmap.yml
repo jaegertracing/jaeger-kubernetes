@@ -36,3 +36,6 @@ data:
       password: changeme
     query:
       static-files: /go/jaeger-ui/
+  agent: |
+    collector:
+      host-port: "jaeger-collector:14267"
