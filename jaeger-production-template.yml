@@ -15,7 +15,7 @@
 apiVersion: v1
 kind: List
 items:
-- apiVersion: apps/v1
+- apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
     name: jaeger-collector
@@ -103,7 +103,7 @@ items:
     selector:
       jaeger-infra: collector-pod
     type: ClusterIP
-- apiVersion: apps/v1
+- apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
     name: jaeger-query
@@ -169,7 +169,7 @@ items:
     selector:
       jaeger-infra: query-pod
     type: LoadBalancer
-- apiVersion: apps/v1
+- apiVersion: extensions/v1beta1
   kind: DaemonSet
   metadata:
     name: jaeger-agent
