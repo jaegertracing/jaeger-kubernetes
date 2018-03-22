@@ -17,7 +17,7 @@ set -e
 
 sudo apt-get update
 sudo apt-get install libncurses5-dev libslang2-dev gettext zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf automake autopoint libtool
-mkdir $HOME/nsenter || true
+mkdir -p $HOME/nsenter
 if [ ! -d $HOME/nsenster/util-linux-2.30.2 ]; then
   wget https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz -qO - | tar -xz -C $HOME/nsenter/
   cd $HOME/nsenter/util-linux-2.30.2 && ./autogen.sh && ./configure && make nsenter
