@@ -97,7 +97,6 @@
             <exclude>header.txt</exclude>
             <exclude>LICENSE</exclude>
             <exclude>**/*.md</exclude>
-            <exclude>.tmp/**</exclude>
           </excludes>
           <strictCheck>true</strictCheck>
         </configuration>
