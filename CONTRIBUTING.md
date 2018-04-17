@@ -38,7 +38,7 @@ pull request is most likely to be accepted if it:
     * Use the body to explain _what_ and _why_ instead of _how_
 * Each commit must be signed by the author ([see below](#sign-your-work)).
 * If your change is not storage-dependent, make sure your change is applied consistently across storage templates as well. For instance, changes to the ConfigMap might need to be done twice.
-* Test your changes and mention in the PR how you tested
+* Test your changes and mention in the PR how you tested.
 
 ## License
 
