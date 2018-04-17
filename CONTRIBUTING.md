@@ -24,7 +24,7 @@ issue](https://github.com/jaegertracing/jaeger-kubernetes/issues).* Discussing y
 changes ahead of time will make the contribution process smooth for everyone.
 
 Once we've discussed your changes and you've got your code ready, make sure
-that tests are passing (`make test` or `make cover`) and open your PR. Your
+that tests are passing and open your PR. Your
 pull request is most likely to be accepted if it:
 
 * Includes tests for new functionality.
