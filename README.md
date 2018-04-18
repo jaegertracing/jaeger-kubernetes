@@ -2,6 +2,10 @@
 
 # Jaeger Kubernetes Templates
 
+## How to contribute
+
+Please see [CONTRIBUTING.md](https://github.com/jaegertracing/jaeger-kubernetes/blob/master/CONTRIBUTING.md)
+
 ## Development setup
 This template uses an in-memory storage with a limited functionality for local testing and development.
 Do not use this template in production environments.
