@@ -123,7 +123,6 @@ Assuming that your application is named `myapp` and the image is for it is `myna
           - containerPort: 5778
             protocol: TCP
           command:
-          - "/go/bin/agent-linux"
           - "--collector.host-port=jaeger-collector.jaeger-infra.svc:14267"
 ```
 
