@@ -12,6 +12,10 @@
 # the License.
 #
 
+#
+# Check https://github.com/jaegertracing/jaeger/releases for the latest version to use
+#
+
 apiVersion: v1
 kind: List
 items:
@@ -33,7 +37,7 @@ items:
           jaeger-infra: collector-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-collector:1.2
+        - image: jaegertracing/jaeger-collector:1.4.1
           name: jaeger-collector
           command:
             - "/go/bin/collector-linux"
@@ -119,7 +123,7 @@ items:
           jaeger-infra: query-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-query:1.2
+        - image: jaegertracing/jaeger-query:1.4.1
           name: jaeger-query
           command:
             - "/go/bin/query-linux"
@@ -179,7 +183,7 @@ items:
       spec:
         containers:
         - name: agent-instance
-          image: jaegertracing/jaeger-agent:1.2
+          image: jaegertracing/jaeger-agent:1.4.1
           command:
           - "/go/bin/agent-linux"
           - "--config-file=/conf/agent.yaml"
