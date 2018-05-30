@@ -147,9 +147,9 @@ kubectl run jaeger-spark-dependencies --schedule="55 23 * * *" --env="STORAGE=ca
 
 If you want to run the job only once and immediately then remove scheduled flag.
 
-## Docker Versions
-The jaeger project automatically creates new docker images with versions that mirror the release number. Feel free to pick the latest release. 
-> A general k8 tip; it's recommended that you do not use `:latest` in production but rather pin the latest version.
+## Deploying Docker Tags
+The Jaeger project automatically creates new Docker images with tags that mirror the release number. Feel free to pick the latest release. 
+> A general tip for deploying docker images (i.e. on kubernetes): it's recommended that you do not use the tag `:latest` in production but rather pin the latest version. See the [kubernetes best practices](https://kubernetes.io/docs/concepts/configuration/overview/#container-images) for more details.
 
 ## Helm support
 A curated [Chart for Kubernetes Helm](https://github.com/kubernetes/charts/tree/master/incubator/jaeger) that adds all components required to run Jaeger.
