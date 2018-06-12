@@ -113,17 +113,18 @@ Assuming that your application is named `myapp` and the image is for it is `myna
           ports:
           - containerPort: 5775
             protocol: UDP
-          - containerPort: 5778
           - containerPort: 6831
             protocol: UDP
           - containerPort: 6832
             protocol: UDP
+          - containerPort: 5778
+            protocol: TCP
           command:
           - "/go/bin/agent-linux"
           - "--collector.host-port=jaeger-collector.jaeger-infra.svc:14267"
 ```
 
-The Jaeger Agent will then be available to your application at `localhost:5775`/`localhost:6831`/`localhost:6832`.
+The Jaeger Agent will then be available to your application at `localhost:5775`/`localhost:6831`/`localhost:6832`/`localhost:5778`.
 In most cases, you don't need to specify a hostname or port to your Jaeger Tracer, as it will default to the right
 values already.
 
