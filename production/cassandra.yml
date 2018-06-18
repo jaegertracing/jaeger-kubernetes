@@ -120,7 +120,7 @@ items:
       spec:
         containers:
         - name: jaeger-cassandra-schema
-          image: jaegertracing/jaeger-cassandra-schema:1.4.1
+          image: jaegertracing/jaeger-cassandra-schema:1.5.0
           # Check https://github.com/jaegertracing/jaeger/releases for the latest version
           env:
             - name: MODE
