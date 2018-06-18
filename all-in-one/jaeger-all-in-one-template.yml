@@ -1,5 +1,5 @@
 #
-# Copyright 2017 The Jaeger Authors
+# Copyright 2017-2018 The Jaeger Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 # in compliance with the License. You may obtain a copy of the License at
@@ -45,6 +45,8 @@ items:
                   protocol: UDP
                 - containerPort: 6832
                   protocol: UDP
+                - containerPort: 5778
+                  protocol: TCP
                 - containerPort: 16686
                   protocol: TCP
                 - containerPort: 9411
@@ -115,6 +117,10 @@ items:
       port: 6832
       protocol: UDP
       targetPort: 6832
+    - name: agent-configs
+      port: 5778
+      protocol: TCP
+      targetPort: 5778
     clusterIP: None
     selector:
       jaeger-infra: jaeger-pod
