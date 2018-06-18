@@ -7,8 +7,8 @@
 Please see [CONTRIBUTING.md](https://github.com/jaegertracing/jaeger-kubernetes/blob/master/CONTRIBUTING.md)
 
 ## Development setup
-This template uses an in-memory storage with a limited functionality for local testing and development.
-Do not use this template in production environments.
+This template uses an in-memory storage with a limited functionality for local testing and development. The image used defaults to the latest version (released)[https://github.com/jaegertracing/jaeger/releases].
+Do not use this template in production environments. Note that functionality may differ from the pinned docker versions for production. 
 
 Install everything in the current namespace:
 ```bash
@@ -20,6 +20,9 @@ If you are using `minikube` to setup your Kubernetes cluster, the command `minik
 can be used instead.
 
 ## Production setup
+
+### Pinned Production Version
+The docker image tags are manually pinned and manually updated. You should use the current pinned version for production. 
 
 ### Backing storage
 

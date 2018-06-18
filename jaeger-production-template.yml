@@ -12,10 +12,6 @@
 # the License.
 #
 
-#
-# Check https://github.com/jaegertracing/jaeger/releases for the latest version to use
-#
-
 apiVersion: v1
 kind: List
 items:
