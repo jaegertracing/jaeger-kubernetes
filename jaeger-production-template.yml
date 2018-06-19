@@ -33,7 +33,7 @@ items:
           jaeger-infra: collector-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-collector:1.2
+        - image: jaegertracing/jaeger-collector:1.5.0
           name: jaeger-collector
           command:
             - "/go/bin/collector-linux"
@@ -119,7 +119,7 @@ items:
           jaeger-infra: query-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-query:1.2
+        - image: jaegertracing/jaeger-query:1.5.0
           name: jaeger-query
           command:
             - "/go/bin/query-linux"
@@ -179,7 +179,7 @@ items:
       spec:
         containers:
         - name: agent-instance
-          image: jaegertracing/jaeger-agent:1.2
+          image: jaegertracing/jaeger-agent:1.5.0
           command:
           - "/go/bin/agent-linux"
           - "--config-file=/conf/agent.yaml"
