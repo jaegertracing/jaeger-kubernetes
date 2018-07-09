@@ -33,7 +33,7 @@ items:
           jaeger-infra: collector-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-collector:1.5.0
+        - image: jaegertracing/jaeger-collector:1.6.0
           name: jaeger-collector
           command:
             - "--config-file=/conf/collector.yaml"
@@ -118,7 +118,7 @@ items:
           jaeger-infra: query-pod
       spec:
         containers:
-        - image: jaegertracing/jaeger-query:1.5.0
+        - image: jaegertracing/jaeger-query:1.6.0
           name: jaeger-query
           command:
             - "--config-file=/conf/query.yaml"
@@ -177,7 +177,7 @@ items:
       spec:
         containers:
         - name: agent-instance
-          image: jaegertracing/jaeger-agent:1.5.0
+          image: jaegertracing/jaeger-agent:1.6.0
           command:
           - "--config-file=/conf/agent.yaml"
           volumeMounts:
