@@ -19,6 +19,8 @@ Once everything is ready, `kubectl get service jaeger-query` tells you where to 
 If you are using `minikube` to setup your Kubernetes cluster, the command `minikube service jaeger-query --url`
 can be used instead.
 
+As the Jaeger Agent is deployed with the other components, your application needs to tell the Jaeger Client where to find the agent (`jaeger-all-in-one-agent`). Refer to your client's documentation for the appropriate mechanism, but most clients allow this to be set via the environment variable `JAEGER_AGENT_HOST`.
+
 ## Production setup
 
 ### Pinned Production Version
