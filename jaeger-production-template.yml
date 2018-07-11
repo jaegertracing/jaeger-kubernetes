@@ -35,8 +35,7 @@ items:
         containers:
         - image: jaegertracing/jaeger-collector:1.6.0
           name: jaeger-collector
-          command:
-            - "--config-file=/conf/collector.yaml"
+          args: ["--config-file=/conf/collector.yaml"]
           ports:
           - containerPort: 14267
             protocol: TCP
@@ -120,8 +119,7 @@ items:
         containers:
         - image: jaegertracing/jaeger-query:1.6.0
           name: jaeger-query
-          command:
-            - "--config-file=/conf/query.yaml"
+          args: ["--config-file=/conf/query.yaml"]
           ports:
           - containerPort: 16686
             protocol: TCP
@@ -178,8 +176,7 @@ items:
         containers:
         - name: agent-instance
           image: jaegertracing/jaeger-agent:1.6.0
-          command:
-          - "--config-file=/conf/agent.yaml"
+          args: ["--config-file=/conf/agent.yaml"]
           volumeMounts:
           - name: jaeger-configuration-volume
             mountPath: /conf
