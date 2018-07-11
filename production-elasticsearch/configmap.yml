@@ -34,8 +34,6 @@ data:
       server-urls: http://elasticsearch:9200
       username: elastic
       password: changeme
-    query:
-      static-files: /go/jaeger-ui/
   agent: |
     collector:
       host-port: "jaeger-collector:14267"
