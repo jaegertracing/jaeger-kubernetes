@@ -120,7 +120,7 @@ items:
       spec:
         containers:
         - name: jaeger-cassandra-schema
-          image: jaegertracing/jaeger-cassandra-schema:1.5.0
+          image: jaegertracing/jaeger-cassandra-schema:1.6.0
           env:
             - name: MODE
               value: "prod"
