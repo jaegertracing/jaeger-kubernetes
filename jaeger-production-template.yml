@@ -43,6 +43,10 @@ items:
             protocol: TCP
           - containerPort: 9411
             protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: 14269
           volumeMounts:
           - name: jaeger-configuration-volume
             mountPath: /conf
@@ -126,7 +130,7 @@ items:
           readinessProbe:
             httpGet:
               path: "/"
-              port: 16686
+              port: 16687
           volumeMounts:
           - name: jaeger-configuration-volume
             mountPath: /conf
