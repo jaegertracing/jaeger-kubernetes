@@ -19,8 +19,6 @@ Once everything is ready, `kubectl get service jaeger-query` tells you where to 
 If you are using `minikube` to setup your Kubernetes cluster, the command `minikube service jaeger-query --url`
 can be used instead.
 
-As the Jaeger Agent is deployed with the other components, your application needs to tell the Jaeger Client where to find the agent (`jaeger-all-in-one-agent`). Refer to your client's documentation for the appropriate mechanism, but most clients allow this to be set via the environment variable `JAEGER_AGENT_HOST`.
-
 ## Production setup
 
 ### Pinned Production Version
@@ -132,6 +130,32 @@ Assuming that your application is named `myapp` and the image is for it is `myna
 The Jaeger Agent will then be available to your application at `localhost:5775`/`localhost:6831`/`localhost:6832`/`localhost:5778`.
 In most cases, you don't need to specify a hostname or port to your Jaeger Tracer, as it will default to the right
 values already.
+
+###  Configure UDP/HTTP Senders
+As the Jaeger Agent is deployed with the other components, your application needs to tell the Jaeger Client where to find the agent. Refer to your client's documentation for the appropriate mechanism, but most clients allow this to be set via the environment variable `JAEGER_AGENT_HOST` in environment variable like so:
+
+```yaml
+env:
+    - name: JAEGER_SERVICE_NAME
+    value: <YOUR SERVICE NAME>
+    - name: JAEGER_AGENT_HOST
+    value: jaeger-all-in-one-agent
+    - name: JAEGER_SAMPLER_TYPE
+    value: const
+    - name: JAEGER_SAMPLER_PARAM
+    value: "1"
+```
+The following service names are supported by HTTP sender:
+
+| Service Name       | Port |
+|--------------------|------|
+| `jaeger-collector` |     14268 |
+| `zipkin`           |  9411    |
+
+The following service names are supported by UDP sender:
+
+- jaeger-agent
+
 
 ### Persistent storage
 Even though this template uses a stateful Cassandra, backing storage is set to `emptyDir`. It's more
