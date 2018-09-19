@@ -126,4 +126,6 @@ items:
               value: "prod"
             - name: DATACENTER
               value: "dc1"
+            - name: CQLSH_HOST
+              value: "cassandra"
         restartPolicy: OnFailure
