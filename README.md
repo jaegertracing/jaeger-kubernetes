@@ -8,7 +8,7 @@ Please see [CONTRIBUTING.md](https://github.com/jaegertracing/jaeger-kubernetes/
 
 ## Development setup
 This template uses an in-memory storage with a limited functionality for local testing and development. The image used defaults to the latest version (released)[https://github.com/jaegertracing/jaeger/releases].
-Do not use this template in production environments. Note that functionality may differ from the pinned docker versions for production. 
+Do not use this template in production environments. Note that functionality may differ from the pinned docker versions for production.
 
 Install everything in the current namespace:
 ```bash
@@ -22,11 +22,11 @@ can be used instead.
 ## Production setup
 
 ### Pinned Production Version
-The docker image tags are manually pinned and manually updated. You should use the current pinned version for production. 
+The docker image tags are manually pinned and manually updated. You should use the current pinned version for production.
 
 ### Backing storage
 
-The Jaeger Collector and Query require a backing storage to exist before being started up. As a starting point for your own 
+The Jaeger Collector and Query require a backing storage to exist before being started up. As a starting point for your own
 templates, we provide basic templates deploying Cassandra and Elasticsearch. None of them are ready for production and should
 be adapted before any real usage.
 
@@ -67,7 +67,7 @@ as well as the Agent as `DaemonSet`.
 If the backing storage is not ready by the time the Collector/Agent start, they will fail and Kubernetes will reschedule the
 pod. It's advisable to either wait for the backing storage to stabilize, or to ignore such failures for the first few minutes.
 
-Once everything is ready, `kubectl get service jaeger-query` tells you where to find Jaeger URL, or 
+Once everything is ready, `kubectl get service jaeger-query` tells you where to find Jaeger URL, or
 `minikube service jaeger-query --url` when using `minikube`.
 
 As the agent is deployed as a `DaemonSet`, the node's IP address can be stored as an environment variable and passed down
@@ -85,8 +85,8 @@ env:
 The Jaeger Agent is designed to be deployed local to your service, so that it can receive traces via UDP keeping your
 application's load minimal. By default, the template above installs the agent as a `DaemonSet`, but this means that all
 pods running on a given node will send data to the same agent. If that's not suitable for your workload, an alternative
-is to deploy the agent as a sidecar. To accomplish that, just add it as a container within any struct that supports 
-`spec.containers`, like a `Pod`, `Deployment` and so on. More about this be found on the blog post 
+is to deploy the agent as a sidecar. To accomplish that, just add it as a container within any struct that supports
+`spec.containers`, like a `Pod`, `Deployment` and so on. More about this be found on the blog post
 [Deployment strategies for the Jaeger Agent](https://medium.com/jaegertracing/deployment-strategies-for-the-jaeger-agent-1d6f91796d09).
 
 Assuming that your application is named `myapp` and the image is for it is `mynamespace/hello-myimage`, your
@@ -169,8 +169,14 @@ this functionality.
 This job should be periodically run before end of a day. The following command creates `CronJob`
 scheduled 5 minutes before the midnight.
 
+For Cassandra, use:
 ```bash
-kubectl run jaeger-spark-dependencies --schedule="55 23 * * *" --env="STORAGE=cassandra" --env="CASSANDRA_CONTACT_POINTS=cassandra:9042"  --restart=Never --image=jaegertracing/spark-dependencies
+kubectl run jaeger-spark-dependencies --schedule="55 23 * * *" --env="STORAGE=cassandra" --env="CASSANDRA_CONTACT_POINTS=cassandra:9042" --restart=Never --image=jaegertracing/spark-dependencies
+```
+
+For Elasticsearch, use:
+```bash
+kubectl run jaeger-spark-dependencies --schedule="55 23 * * *" --env="STORAGE=elasticsearch" --env="ES_NODES=elasticsearch:9200" --env="ES_USERNAME=changeme" --env="ES_PASSWORD=changeme" --restart=Never --image=jaegertracing/spark-dependencies
 ```
 
 If you want to run the job only once and immediately then remove scheduled flag.
@@ -200,7 +206,7 @@ minikube start
 ```
 
 ## License
-  
+
 [Apache 2.0 License](./LICENSE).
 
 
