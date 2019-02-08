@@ -100,11 +100,11 @@ Assuming that your application is named `myapp` and the image is for it is `myna
   spec:
     selector:
       matchLabels:
-        app: myapp
+        app.kubernetes.io/name: myapp
     template:
       metadata:
         labels:
-          app: myapp
+          app.kubernetes.io/name: myapp
       spec:
         containers:
         - image: mynamespace/hello-myimage

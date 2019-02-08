@@ -20,16 +20,18 @@ items:
   metadata:
     name: elasticsearch
     labels:
-      app: jaeger
-      jaeger-infra: elasticsearch-statefulset
+      app.kubernetes.io/name: elasticsearch
+      app.kubernetes.io/component: storage-backend
+      app.kubernetes.io/part-of: jaeger
   spec:
     serviceName: elasticsearch
     replicas: 1
     template:
       metadata:
         labels:
-          app: jaeger-elasticsearch
-          jaeger-infra: elasticsearch-replica
+          app.kubernetes.io/name: elasticsearch
+          app.kubernetes.io/component: storage-backend
+          app.kubernetes.io/part-of: jaeger
       spec:
         containers:
           - name: elasticsearch
@@ -65,12 +67,15 @@ items:
   metadata:
     name: elasticsearch
     labels:
-      app: jaeger
-      jaeger-infra: elasticsearch-service
+      app.kubernetes.io/name: elasticsearch
+      app.kubernetes.io/component: storage-backend
+      app.kubernetes.io/part-of: jaeger
   spec:
     clusterIP: None
     selector:
-      app: jaeger-elasticsearch
+      app.kubernetes.io/name: elasticsearch
+      app.kubernetes.io/component: storage-backend
+      app.kubernetes.io/part-of: jaeger
     ports:
     - port: 9200
       name: elasticsearch

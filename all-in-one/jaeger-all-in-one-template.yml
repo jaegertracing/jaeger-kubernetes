@@ -18,10 +18,10 @@ items:
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    name: jaeger-deployment
+    name: jaeger
     labels:
-      app: jaeger
-      jaeger-infra: jaeger-deployment
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: all-in-one
   spec:
     replicas: 1
     strategy:
@@ -29,8 +29,8 @@ items:
     template:
       metadata:
         labels:
-          app: jaeger
-          jaeger-infra: jaeger-pod
+          app.kubernetes.io/name: jaeger
+          app.kubernetes.io/component: all-in-one
         annotations:
           prometheus.io/scrape: "true"
           prometheus.io/port: "16686"
@@ -64,8 +64,8 @@ items:
   metadata:
     name: jaeger-query
     labels:
-      app: jaeger
-      jaeger-infra: jaeger-service
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: query
   spec:
     ports:
       - name: query-http
@@ -73,15 +73,16 @@ items:
         protocol: TCP
         targetPort: 16686
     selector:
-      jaeger-infra: jaeger-pod
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: all-in-one
     type: LoadBalancer
 - apiVersion: v1
   kind: Service
   metadata:
     name: jaeger-collector
     labels:
-      app: jaeger
-      jaeger-infra: collector-service
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: collector
   spec:
     ports:
     - name: jaeger-collector-tchannel
@@ -97,15 +98,16 @@ items:
       protocol: TCP
       targetPort: 9411
     selector:
-      jaeger-infra: jaeger-pod
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: all-in-one
     type: ClusterIP
 - apiVersion: v1
   kind: Service
   metadata:
     name: jaeger-agent
     labels:
-      app: jaeger
-      jaeger-infra: agent-service
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: agent
   spec:
     ports:
     - name: agent-zipkin-thrift
@@ -126,14 +128,15 @@ items:
       targetPort: 5778
     clusterIP: None
     selector:
-      jaeger-infra: jaeger-pod
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: all-in-one
 - apiVersion: v1
   kind: Service
   metadata:
     name: zipkin
     labels:
-      app: jaeger
-      jaeger-infra: zipkin-service
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: zipkin
   spec:
     ports:
     - name: jaeger-collector-zipkin
@@ -142,5 +145,6 @@ items:
       targetPort: 9411
     clusterIP: None
     selector:
-      jaeger-infra: jaeger-pod
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: all-in-one
 

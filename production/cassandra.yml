@@ -20,9 +20,9 @@ items:
   metadata:
     name: cassandra
     labels:
-      app: jaeger
-      name: jaeger-cassandra-service
-      jaeger-infra: cassandra-service
+      app.kubernetes.io/name: cassandra
+      app.kubernetes.io/component: storage-backend
+      app.kubernetes.io/part-of: jaeger
   spec:
     ports:
     - port: 7000
@@ -37,22 +37,26 @@ items:
       name: thrift
     clusterIP: None
     selector:
-      app: cassandra
+      app.kubernetes.io/name: cassandra
+      app.kubernetes.io/component: storage-backend
+      app.kubernetes.io/part-of: jaeger
 - apiVersion: "apps/v1beta1"
   kind: StatefulSet
   metadata:
     name: cassandra
     labels:
-      app: jaeger
-      jaeger-infra: cassandra-statefulset
+      app.kubernetes.io/name: cassandra
+      app.kubernetes.io/component: storage-backend
+      app.kubernetes.io/part-of: jaeger
   spec:
     serviceName: cassandra
     replicas: 3
     template:
       metadata:
         labels:
-          app: cassandra
-          jaeger-infra: cassandra-replica
+          app.kubernetes.io/name: cassandra
+          app.kubernetes.io/component: storage-backend
+          app.kubernetes.io/part-of: jaeger
       spec:
         terminationGracePeriodSeconds: 1800
         containers:
@@ -110,8 +114,9 @@ items:
   metadata:
     name: jaeger-cassandra-schema-job
     labels:
-      app: jaeger
-      jaeger-infra: cassandra-schema-job
+      app.kubernetes.io/name: cassandra-schema
+      app.kubernetes.io/component: storage-backend
+      app.kubernetes.io/part-of: jaeger
   spec:
     activeDeadlineSeconds: 120
     template:
