@@ -20,6 +20,7 @@ items:
   metadata:
     name: elasticsearch
     labels:
+      app: elasticsearch
       app.kubernetes.io/name: elasticsearch
       app.kubernetes.io/component: storage-backend
       app.kubernetes.io/part-of: jaeger
@@ -29,6 +30,7 @@ items:
     template:
       metadata:
         labels:
+          app: elasticsearch
           app.kubernetes.io/name: elasticsearch
           app.kubernetes.io/component: storage-backend
           app.kubernetes.io/part-of: jaeger
@@ -67,6 +69,7 @@ items:
   metadata:
     name: elasticsearch
     labels:
+      app: elasticsearch
       app.kubernetes.io/name: elasticsearch
       app.kubernetes.io/component: storage-backend
       app.kubernetes.io/part-of: jaeger

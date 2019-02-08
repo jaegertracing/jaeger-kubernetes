@@ -20,6 +20,7 @@ items:
   metadata:
     name: jaeger
     labels:
+      app: jaeger
       app.kubernetes.io/name: jaeger
       app.kubernetes.io/component: all-in-one
   spec:
@@ -29,6 +30,7 @@ items:
     template:
       metadata:
         labels:
+          app: jaeger
           app.kubernetes.io/name: jaeger
           app.kubernetes.io/component: all-in-one
         annotations:
@@ -64,6 +66,7 @@ items:
   metadata:
     name: jaeger-query
     labels:
+      app: jaeger
       app.kubernetes.io/name: jaeger
       app.kubernetes.io/component: query
   spec:
@@ -81,6 +84,7 @@ items:
   metadata:
     name: jaeger-collector
     labels:
+      app: jaeger
       app.kubernetes.io/name: jaeger
       app.kubernetes.io/component: collector
   spec:
@@ -106,6 +110,7 @@ items:
   metadata:
     name: jaeger-agent
     labels:
+      app: jaeger
       app.kubernetes.io/name: jaeger
       app.kubernetes.io/component: agent
   spec:
@@ -135,6 +140,7 @@ items:
   metadata:
     name: zipkin
     labels:
+      app: jaeger
       app.kubernetes.io/name: jaeger
       app.kubernetes.io/component: zipkin
   spec:
