@@ -21,7 +21,8 @@ items:
     name: jaeger-collector
     labels:
       app: jaeger
-      jaeger-infra: collector-deployment
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: collector
   spec:
     replicas: 1
     strategy:
@@ -30,13 +31,14 @@ items:
       metadata:
         labels:
           app: jaeger
-          jaeger-infra: collector-pod
+          app.kubernetes.io/name: jaeger
+          app.kubernetes.io/component: collector
         annotations:
           prometheus.io/scrape: "true"
           prometheus.io/port: "14268"
       spec:
         containers:
-        - image: jaegertracing/jaeger-collector:1.7.0
+        - image: jaegertracing/jaeger-collector:1.9.0
           name: jaeger-collector
           args: ["--config-file=/conf/collector.yaml"]
           ports:
@@ -72,7 +74,8 @@ items:
     name: jaeger-collector
     labels:
       app: jaeger
-      jaeger-infra: collector-service
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: collector
   spec:
     ports:
     - name: jaeger-collector-tchannel
@@ -88,7 +91,8 @@ items:
       protocol: TCP
       targetPort: 9411
     selector:
-      jaeger-infra: collector-pod
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: collector
     type: ClusterIP
 - apiVersion: v1
   kind: Service
@@ -96,7 +100,8 @@ items:
     name: zipkin
     labels:
       app: jaeger
-      jaeger-infra: zipkin-service
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: zipkin
   spec:
     ports:
     - name: jaeger-collector-zipkin
@@ -104,7 +109,8 @@ items:
       protocol: TCP
       targetPort: 9411
     selector:
-      jaeger-infra: collector-pod
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: collector
     type: ClusterIP
 - apiVersion: extensions/v1beta1
   kind: Deployment
@@ -112,7 +118,8 @@ items:
     name: jaeger-query
     labels:
       app: jaeger
-      jaeger-infra: query-deployment
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: query
   spec:
     replicas: 1
     strategy:
@@ -121,13 +128,14 @@ items:
       metadata:
         labels:
           app: jaeger
-          jaeger-infra: query-pod
+          app.kubernetes.io/name: jaeger
+          app.kubernetes.io/component: query
         annotations:
           prometheus.io/scrape: "true"
           prometheus.io/port: "16686"
       spec:
         containers:
-        - image: jaegertracing/jaeger-query:1.7.0
+        - image: jaegertracing/jaeger-query:1.9.0
           name: jaeger-query
           args: ["--config-file=/conf/query.yaml"]
           ports:
@@ -159,7 +167,8 @@ items:
     name: jaeger-query
     labels:
       app: jaeger
-      jaeger-infra: query-service
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: query
   spec:
     ports:
     - name: jaeger-query
@@ -167,7 +176,8 @@ items:
       protocol: TCP
       targetPort: 16686
     selector:
-      jaeger-infra: query-pod
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: query
     type: LoadBalancer
 - apiVersion: extensions/v1beta1
   kind: DaemonSet
@@ -175,20 +185,22 @@ items:
     name: jaeger-agent
     labels:
       app: jaeger
-      jaeger-infra: agent-daemonset
+      app.kubernetes.io/name: jaeger
+      app.kubernetes.io/component: agent
   spec:
     template:
       metadata:
         labels:
           app: jaeger
-          jaeger-infra: agent-instance
+          app.kubernetes.io/name: jaeger
+          app.kubernetes.io/component: agent
         annotations:
           prometheus.io/scrape: "true"
           prometheus.io/port: "5778"
       spec:
         containers:
-        - name: agent-instance
-          image: jaegertracing/jaeger-agent:1.7.0
+        - name: jaeger-agent
+          image: jaegertracing/jaeger-agent:1.9.0
           args: ["--config-file=/conf/agent.yaml"]
           volumeMounts:
           - name: jaeger-configuration-volume

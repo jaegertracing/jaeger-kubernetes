@@ -18,7 +18,7 @@ metadata:
   name: jaeger-configuration
   labels:
     app: jaeger
-    jaeger-infra: configuration
+    app.kubernetes.io/name: jaeger
 data:
   span-storage-type: cassandra
   collector: |
