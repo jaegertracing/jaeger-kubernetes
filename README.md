@@ -145,7 +145,7 @@ env:
     - name: JAEGER_SERVICE_NAME
     value: <YOUR SERVICE NAME>
     - name: JAEGER_AGENT_HOST
-    value: jaeger-all-in-one-agent
+    value: jaeger-agent
     - name: JAEGER_SAMPLER_TYPE
     value: const
     - name: JAEGER_SAMPLER_PARAM
