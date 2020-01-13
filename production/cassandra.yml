@@ -122,10 +122,12 @@ items:
       app.kubernetes.io/component: storage-backend
       app.kubernetes.io/part-of: jaeger
   spec:
+    activeDeadlineSeconds: 86400
     template:
       metadata:
         name: cassandra-schema
       spec:
+        activeDeadlineSeconds: 320
         containers:
         - name: jaeger-cassandra-schema
           image: jaegertracing/jaeger-cassandra-schema:1.6.0
