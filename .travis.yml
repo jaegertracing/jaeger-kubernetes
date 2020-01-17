@@ -1,23 +1,21 @@
-dist: trusty
+dist: xenial
 sudo: required
 
 language: java
-jdk:
-  - oraclejdk8
 
 services:
   - docker
 
 before_install:
-# install nsenter which is required for port forwarding
+  # install nsenter which is required for port forwarding
   - travis/ubuntu-compile-nsenter.sh && sudo cp $HOME/nsenter/util-linux-2.30.2/nsenter /usr/bin
   - travis/install-start-minikube.sh && export PATH=`pwd`:${PATH} # set minikube and kubectl to PATH
   - kubectl get all --all-namespaces
 
 cache:
   directories:
-  - $HOME/.m2/repository
-  - $HOME/nsenter
+    - $HOME/.m2/repository
+    - $HOME/nsenter
 
 install:
   # Override default travis to use the maven wrapper
@@ -26,13 +24,13 @@ install:
 jobs:
   include:
     - stage: test
-      env: [ NAME=all-in-one ]
+      env: [NAME=all-in-one]
       script: ./mvnw clean verify -Pall-in-one
 
-    - env: [ NAME=cassandra ]
+    - env: [NAME=cassandra]
       script: ./mvnw clean verify -Pcassandra
 
-    - env: [ NAME=elasticsearch ]
+    - env: [NAME=elasticsearch]
       script: ./mvnw clean verify -Pelasticsearch
 
 after_script:
