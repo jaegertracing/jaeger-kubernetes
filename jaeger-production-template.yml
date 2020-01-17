@@ -25,6 +25,9 @@ items:
         app.kubernetes.io/component: collector
     spec:
       replicas: 1
+      selector:
+        matchLabels:
+          app: jaeger
       strategy:
         type: Recreate
       template:
@@ -91,6 +94,9 @@ items:
           protocol: TCP
           targetPort: 9411
       selector:
+        matchLabels:
+          app: jaeger
+      selector:
         app.kubernetes.io/name: jaeger
         app.kubernetes.io/component: collector
       type: ClusterIP
@@ -109,6 +115,9 @@ items:
           protocol: TCP
           targetPort: 9411
       selector:
+        matchLabels:
+          app: jaeger
+      selector:
         app.kubernetes.io/name: jaeger
         app.kubernetes.io/component: collector
       type: ClusterIP
@@ -124,6 +133,9 @@ items:
       replicas: 1
       strategy:
         type: Recreate
+      selector:
+        matchLabels:
+          app: jaeger
       template:
         metadata:
           labels:
@@ -176,6 +188,9 @@ items:
           protocol: TCP
           targetPort: 16686
       selector:
+        matchLabels:
+          app: jaeger
+      selector:
         app.kubernetes.io/name: jaeger
         app.kubernetes.io/component: query
       type: LoadBalancer
@@ -188,6 +203,9 @@ items:
         app.kubernetes.io/name: jaeger
         app.kubernetes.io/component: agent
     spec:
+      selector:
+        matchLabels:
+          app: jaeger
       template:
         metadata:
           labels:
