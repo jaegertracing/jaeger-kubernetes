@@ -184,7 +184,7 @@ items:
     spec:
       ports:
         - name: jaeger-query
-          port: 80
+          port: 3000
           protocol: TCP
           targetPort: 16686
       selector:
