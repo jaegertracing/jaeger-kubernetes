@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: jaeger-ingester
+      labels:
+        app: jaeger
+        app.kubernetes.io/name: jaeger
+        app.kubernetes.io/component: ingester
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app: jaeger
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          labels:
+            app: jaeger
+            app.kubernetes.io/name: jaeger
+            app.kubernetes.io/component: ingester
+        spec:
+          containers:
+            - image: jaegertracing/jaeger-ingester:1.16.0
+              name: jaeger-ingester
+              args: ["--log-level=debug", "--config-file=/conf/ingester.yaml"]
+              ports:
+                - containerPort: 14270
+                  protocol: TCP
+                - containerPort: 14271
+                  protocol: TCP
+              volumeMounts:
+                - name: jaeger-configuration-volume
+                  mountPath: /conf
+              env:
+                - name: SPAN_STORAGE_TYPE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: jaeger-configuration
+                      key: query-span-storage-type
+          volumes:
+            - configMap:
+                name: jaeger-configuration
+                items:
+                  - key: ingester
+                    path: ingester.yaml
+              name: jaeger-configuration-volume
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: jaeger-ingester
+      labels:
+        app: jaeger
+        app.kubernetes.io/name: jaeger
+        app.kubernetes.io/component: ingester
+    spec:
+      ports:
+        - name: health-check
+          port: 14270
+          targetPort: 14270
+        - name: metrics
+          port: 14271
+          targetPort: 14271
+      selector:
+        matchLabels:
+          app: jaeger
+      selector:
+        app.kubernetes.io/name: jaeger
+        app.kubernetes.io/component: ingester
+      type: NodePort

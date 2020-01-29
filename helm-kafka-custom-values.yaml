@@ -1,0 +1,12 @@
+## Number of Kafka brokers
+cp-kafka:
+  brokers: 2
+  ## Kafka Server properties
+  configurationOverrides:
+    "log.dirs": /opt/kafka/data/logs
+    "offsets.topic.replication.factor": 2
+    "min.insync.replicas": 2
+
+## Number of zookeeper servers
+cp-zookeeper:
+  servers: 2
