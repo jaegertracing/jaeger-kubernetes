@@ -1,12 +1,28 @@
+# Zookeeper should maintain a quorum or (n/2 + 1) total machines (of n) that agree on
+# leader-election values and locks, that results in a total odd number to
+# accommodate for hardware and network failure scenarios.
+
+# From "Kafka - The Definitive Guide", as well as Apache Zookeeper site,
+# you generally will have negative side effects from having more than 5 or 7 Zookeeper servers total serving applications using it.
+
+# You should have more than 3 Zookeepers because if one goes down,
+# you are only left with 2, which results in that "split brain".
+# With 5 servers, two can go down, and you still have 2 servers + 1 available for the "tie breaker" vote.
+# For 7, you can loose up to 4 zookeepers and still be good.
+
+# It won't crash with even numbers, if you have limit resources like I do for local env, you can use 2 or some even numbers,
+# or you can change the kafka broker memory allocations.
+# Here are configurable options: https://github.com/helm/charts/blob/master/incubator/kafka/values.yaml
+
 ## Number of Kafka brokers
 cp-kafka:
-  brokers: 2
+  brokers: 3
   ## Kafka Server properties
   configurationOverrides:
     "log.dirs": /opt/kafka/data/logs
-    "offsets.topic.replication.factor": 2
-    "min.insync.replicas": 2
+    "offsets.topic.replication.factor": 3
+    "min.insync.replicas": 3
 
 ## Number of zookeeper servers
 cp-zookeeper:
-  servers: 2
+  servers: 3
