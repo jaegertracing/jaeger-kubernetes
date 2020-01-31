@@ -12,7 +12,7 @@
 
 # It won't crash with even numbers, if you have limit resources like I do for local env, you can use 2 or some even numbers,
 # or you can change the kafka broker memory allocations.
-# Here are configurable options: https://github.com/helm/charts/blob/master/incubator/kafka/values.yaml
+# Here are configurable options: https://github.com/confluentinc/cp-helm-charts/blob/master/values.yaml
 
 ## Number of Kafka brokers
 cp-kafka:
