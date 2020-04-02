@@ -26,8 +26,8 @@ items:
   spec:
     replicas: 1
     selector:
-        matchLabels:
-          app: jaeger
+      matchLabels:
+        app: jaeger
     strategy:
       type: Recreate
     template:
@@ -74,8 +74,8 @@ items:
       app.kubernetes.io/component: query
   spec:
     selector:
-        matchLabels:
-          app: jaeger-query
+      matchLabels:
+        app: jaeger-query
     ports:
       - name: query-http
         port: 80
@@ -95,8 +95,8 @@ items:
       app.kubernetes.io/component: collector
   spec:
     selector:
-        matchLabels:
-          app: jaeger-collector
+      matchLabels:
+        app: jaeger-collector
     ports:
     - name: jaeger-collector-tchannel
       port: 14267
@@ -124,8 +124,8 @@ items:
       app.kubernetes.io/component: agent
   spec:
     selector:
-        matchLabels:
-          app: jaeger-agent
+      matchLabels:
+        app: jaeger-agent
     ports:
     - name: agent-zipkin-thrift
       port: 5775
@@ -157,8 +157,8 @@ items:
       app.kubernetes.io/component: zipkin
   spec:
     selector:
-        matchLabels:
-          app: zipkin
+      matchLabels:
+        app: zipkin
     ports:
     - name: jaeger-collector-zipkin
       port: 9411
