@@ -52,7 +52,7 @@ items:
                   protocol: UDP
                 - containerPort: 5778
                   protocol: TCP
-                - containerPort: 16686
+                - containerPort: 14269
                   protocol: TCP
                 - containerPort: 9411
                   protocol: TCP
