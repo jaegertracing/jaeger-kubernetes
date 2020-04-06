@@ -74,7 +74,7 @@ items:
       - name: query-http
         port: 80
         protocol: TCP
-        targetPort: 14269
+        targetPort: 16686
     selector:
       app.kubernetes.io/name: jaeger
       app.kubernetes.io/component: all-in-one
