@@ -35,7 +35,7 @@ items:
           app.kubernetes.io/component: all-in-one
         annotations:
           prometheus.io/scrape: "true"
-          prometheus.io/port: "16686"
+          prometheus.io/port: "14269"
       spec:
           containers:
           -   env:
@@ -74,7 +74,7 @@ items:
       - name: query-http
         port: 80
         protocol: TCP
-        targetPort: 16686
+        targetPort: 14269
     selector:
       app.kubernetes.io/name: jaeger
       app.kubernetes.io/component: all-in-one
