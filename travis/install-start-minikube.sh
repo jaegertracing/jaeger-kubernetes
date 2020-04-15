@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright 2017-2018 The Jaeger Authors
+# Copyright 2017-2020 The Jaeger Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 # in compliance with the License. You may obtain a copy of the License at
@@ -13,25 +13,23 @@
 # the License.
 #
 
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.0/minikube-linux-amd64 && chmod +x minikube
-curl -Lo kubectl  https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl && chmod +x kubectl
-
+export CHANGE_MINIKUBE_NONE_USER=true
 export MINIKUBE_WANTUPDATENOTIFICATION=false
 export MINIKUBE_WANTREPORTERRORPROMPT=false
 export MINIKUBE_HOME=$HOME
 export CHANGE_MINIKUBE_NONE_USER=true
-mkdir $HOME/.kube || true
-touch $HOME/.kube/config
-
 export KUBECONFIG=$HOME/.kube/config
-sudo -E ./minikube start --vm-driver=none
 
-# this for loop waits until kubectl can access the api server that minikube has created
-for i in {1..150} # timeout for 5 minutes
-do
-   ./kubectl get po &> /dev/null
-   if [ $? -ne 1 ]; then
-      break
-  fi
-  sleep 2
-done
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.8.1/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.18.1/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+
+mkdir -p $HOME/.kube $HOME/.minikube
+touch $KUBECONFIG
+
+sudo minikube start --profile=minikube --vm-driver=none --kubernetes-version=v1.18.1
+minikube update-context --profile=minikube
+
+eval "$(minikube docker-env --profile=minikube)" && export DOCKER_CLI='docker'
+
+# Wait for kube-dns to be ready.
+JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl -n kube-system get pods -lk8s-app=kube-dns -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1;echo "waiting for kube-dns to be available"; kubectl get pods --all-namespaces; done
