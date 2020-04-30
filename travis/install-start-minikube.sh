@@ -20,13 +20,13 @@ export MINIKUBE_HOME=$HOME
 export CHANGE_MINIKUBE_NONE_USER=true
 export KUBECONFIG=$HOME/.kube/config
 
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.8.1/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
-curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.18.1/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.9.2/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 
 mkdir -p $HOME/.kube $HOME/.minikube
 touch $KUBECONFIG
 
-sudo minikube start --profile=minikube --vm-driver=none --kubernetes-version=v1.18.1
+sudo minikube start --profile=minikube --vm-driver=none --kubernetes-version=v1.18.2
 minikube update-context --profile=minikube
 
 eval "$(minikube docker-env --profile=minikube)" && export DOCKER_CLI='docker'
