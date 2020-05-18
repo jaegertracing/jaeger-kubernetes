@@ -35,7 +35,7 @@ items:
           app.kubernetes.io/component: all-in-one
         annotations:
           prometheus.io/scrape: "true"
-          prometheus.io/port: "16686"
+          prometheus.io/port: "14269"
       spec:
           containers:
           -   env:
@@ -53,6 +53,12 @@ items:
                 - containerPort: 5778
                   protocol: TCP
                 - containerPort: 16686
+                  protocol: TCP
+                - containerPort: 16687
+                  protocol: TCP
+                - containerPort: 14269
+                  protocol: TCP
+                - containerPort: 14271
                   protocol: TCP
                 - containerPort: 9411
                   protocol: TCP
@@ -74,7 +80,7 @@ items:
       - name: query-http
         port: 80
         protocol: TCP
-        targetPort: 16686
+        targetPort: 16687
     selector:
       app.kubernetes.io/name: jaeger
       app.kubernetes.io/component: all-in-one
@@ -94,9 +100,9 @@ items:
       protocol: TCP
       targetPort: 14267
     - name: jaeger-collector-http
-      port: 14268
+      port: 14269
       protocol: TCP
-      targetPort: 14268
+      targetPort: 14269
     - name: jaeger-collector-zipkin
       port: 9411
       protocol: TCP
@@ -128,9 +134,9 @@ items:
       protocol: UDP
       targetPort: 6832
     - name: agent-configs
-      port: 5778
+      port: 14271
       protocol: TCP
-      targetPort: 5778
+      targetPort: 14271
     clusterIP: None
     selector:
       app.kubernetes.io/name: jaeger
