@@ -6,10 +6,10 @@
 
 The recommended way of installing and managing Jaeger in a production Kubernetes cluster is via the [Jaeger Operator](https://github.com/jaegertracing/jaeger-operator).
 
-The Jaeger Operator binary can be used as [CLI to generate](https://github.com/jaegertracing/jaeger-operator#experimental-generate-kubernetes-manifest-file) Kubernetes manifests from the Jaeger CR.
+The Jaeger Operator provides a [CLI to generate](https://github.com/jaegertracing/jaeger-operator#experimental-generate-kubernetes-manifest-file) Kubernetes manifests from the Jaeger CR.
 This can be considered as an alternative source of plain Kubernetes manifest files.
 
-Jaeger ecosystem also provides [Helm chart](https://github.com/jaegertracing/helm-charts) implementation as an alternative way of deploying Jaeger.
+Jaeger ecosystem also provides a [Helm chart](https://github.com/jaegertracing/helm-charts) as an alternative way of deploying Jaeger.
 
 ## How to contribute
 
