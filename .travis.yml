@@ -1,15 +1,17 @@
-dist: trusty
+dist: xenial
 sudo: required
 
 language: java
 jdk:
-  - oraclejdk8
+  - openjdk8
 
 services:
   - docker
 
 before_install:
-# install nsenter which is required for port forwarding
+  # install conntrack which is required for minikube
+  - sudo apt-get -qq -y install conntrack
+  # install nsenter which is required for port forwarding
   - travis/ubuntu-compile-nsenter.sh && sudo cp $HOME/nsenter/util-linux-2.30.2/nsenter /usr/bin
   - travis/install-start-minikube.sh && export PATH=`pwd`:${PATH} # set minikube and kubectl to PATH
   - kubectl get all --all-namespaces
