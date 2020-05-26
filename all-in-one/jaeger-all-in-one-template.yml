@@ -35,7 +35,7 @@ items:
           app.kubernetes.io/component: all-in-one
         annotations:
           prometheus.io/scrape: "true"
-          prometheus.io/port: "16686"
+          prometheus.io/port: "14269"
       spec:
           containers:
           -   env:
@@ -53,6 +53,8 @@ items:
                 - containerPort: 5778
                   protocol: TCP
                 - containerPort: 16686
+                  protocol: TCP
+                - containerPort: 14269
                   protocol: TCP
                 - containerPort: 9411
                   protocol: TCP
